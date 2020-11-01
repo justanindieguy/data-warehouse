@@ -24,33 +24,33 @@ CREATE TABLE IF NOT EXISTS roles(
 CREATE TABLE IF NOT EXISTS users(
 	id INT(11) UNSIGNED AUTO_INCREMENT,
 	name VARCHAR(100) NOT NULL CHECK (name <> ""),
-	last_name_one VARCHAR(100) NOT NULL CHECK (last_name_one <> ""),
-	last_name_two VARCHAR(100) NOT NULL CHECK (last_name_two <> ""),
-	rol_id INT(2) UNSIGNED NOT NULL DEFAULT 1,
+	lastNameOne VARCHAR(100) NOT NULL CHECK (lastNameOne <> ""),
+	lastNameTwo VARCHAR(100) NOT NULL CHECK (lastNameTwo <> ""),
+	roleId INT(2) UNSIGNED NOT NULL DEFAULT 1,
 	email VARCHAR(150) NOT NULL CHECK (email <> ""),
 	password VARCHAR(500) NOT NULL CHECK (password <> ""),
 	PRIMARY KEY (id),
-	FOREIGN KEY (rol_id)
+	FOREIGN KEY (roleId)
 		REFERENCES roles(id)
 		ON DELETE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS countries(
 	id INT(4) UNSIGNED AUTO_INCREMENT,
-	region_id INT(2) UNSIGNED NOT NULL,
+	regionId INT(2) UNSIGNED NOT NULL,
 	name VARCHAR(150) NOT NULL CHECK (name <> ""),
 	PRIMARY KEY (id),
-	FOREIGN KEY (region_id)
+	FOREIGN KEY (regionId)
 		REFERENCES regions(id)
 		ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS cities(
 	id INT(6) UNSIGNED AUTO_INCREMENT,
-	country_id INT(4) UNSIGNED NOT NULL,
+	countryId INT(4) UNSIGNED NOT NULL,
 	name VARCHAR(150) NOT NULL CHECK (name <> ""),
 	PRIMARY KEY (id),
-	FOREIGN KEY (country_id)
+	FOREIGN KEY (countryId)
 		REFERENCES countries(id)
 		ON DELETE CASCADE
 );
@@ -61,9 +61,9 @@ CREATE TABLE IF NOT EXISTS companies(
 	address VARCHAR(500) NOT NULL CHECK (address <> ""),
 	email VARCHAR(150) NOT NULL CHECK (email <> ""),
 	phone VARCHAR(20) NOT NULL CHECK (phone <> ""),
-	city_id INT(6) UNSIGNED NOT NULL,
+	cityId INT(6) UNSIGNED NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (city_id)
+	FOREIGN KEY (cityId)
 		REFERENCES cities(id)
 		ON DELETE CASCADE
 );
@@ -71,31 +71,31 @@ CREATE TABLE IF NOT EXISTS companies(
 CREATE TABLE IF NOT EXISTS contacts(
 	id INT(8) UNSIGNED AUTO_INCREMENT,
 	name VARCHAR(100) NOT NULL CHECK (name <> ""),
-	last_name_one VARCHAR(100) NOT NULL CHECK (last_name_one <> ""),
-	last_name_two VARCHAR(100) NOT NULL CHECK (last_name_two <> ""),
+	lastNameOne VARCHAR(100) NOT NULL CHECK (lastNameOne <> ""),
+	lastNameTwo VARCHAR(100) NOT NULL CHECK (lastNameTwo <> ""),
 	email VARCHAR(150) NOT NULL CHECK (email <> ""),
-	company_id INT(6) UNSIGNED NOT NULL,
-	city_id INT(6) UNSIGNED NOT NULL,
+	companyId INT(6) UNSIGNED NOT NULL,
+	cityId INT(6) UNSIGNED NOT NULL,
 	position VARCHAR(200) NOT NULL CHECK (position <> ""),
 	interest INT(3) UNSIGNED NOT NULL DEFAULT 0,
 	PRIMARY KEY (id),
-	FOREIGN KEY (company_id)
+	FOREIGN KEY (companyId)
 		REFERENCES companies(id)
 		ON DELETE CASCADE,
-	FOREIGN KEY (city_id)
+	FOREIGN KEY (cityId)
 		REFERENCES cities(id)
 		ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS accounts(
-	channel_id INT(2) UNSIGNED,
-	contact_id INT(8) UNSIGNED,
+	channelId INT(2) UNSIGNED,
+	contactId INT(8) UNSIGNED,
 	account VARCHAR(200) NOT NULL CHECK (account <> ""),
-	PRIMARY KEY (channel_id, contact_id),
-	FOREIGN KEY (channel_id)
+	PRIMARY KEY (channelId, contactId),
+	FOREIGN KEY (channelId)
 		REFERENCES channels(id)
 		ON DELETE CASCADE,
-	FOREIGN KEY (contact_id)
+	FOREIGN KEY (contactId)
 		REFERENCES contacts(id)
 		ON DELETE CASCADE
 );
@@ -110,7 +110,7 @@ VALUES ('Sudamérica'),
 -- Insertar países. --
 INSERT
 	INTO
-	countries(name, region_id)
+	countries(name, regionId)
 VALUES ('Argentina', 1),
 ('Colombia', 1),
 ('Chile', 1),
@@ -121,7 +121,7 @@ VALUES ('Argentina', 1),
 -- Insertar ciudades.
 INSERT
 INTO
-	cities(name, country_id)
+	cities(name, countryId)
 VALUES ('Buenos Aires', 1),
 ('Córdoba', 1),
 ('Bogotá', 2),

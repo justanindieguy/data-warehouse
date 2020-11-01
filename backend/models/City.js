@@ -8,9 +8,9 @@ const City = sequelize.define(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      allowNull: false,
+      autoIncrement: true,
     },
-    country_id: {
+    countryId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -24,7 +24,7 @@ const City = sequelize.define(
   }
 );
 
-City.hasMany(Company, { foreignKey: 'city_id', sourceKey: 'id' });
-Company.belongsTo(City, { foreignKey: 'city_id', sourceKey: 'id' });
+City.hasMany(Company, { foreignKey: 'cityId', sourceKey: 'id' });
+Company.belongsTo(City, { foreignKey: 'cityId', sourceKey: 'id' });
 
 module.exports = City;

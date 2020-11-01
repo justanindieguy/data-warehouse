@@ -8,17 +8,17 @@ const Contact = sequelize.define(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      allowNull: false,
+      autoIncrement: true,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    last_name_one: {
+    lastNameOne: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    last_name_two: {
+    lastNameTwo: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -26,11 +26,11 @@ const Contact = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    company_id: {
+    companyId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    city_id: {
+    cityId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -49,7 +49,7 @@ const Contact = sequelize.define(
   }
 );
 
-Contact.hasMany(Account, { foreignKey: 'contact_id', sourceKey: 'id' });
-Account.belongsTo(Contact, { foreignKey: 'contact_id', sourceKey: 'id' });
+Contact.hasMany(Account, { foreignKey: 'contactId', sourceKey: 'id' });
+Account.belongsTo(Contact, { foreignKey: 'contactId', sourceKey: 'id' });
 
 module.exports = Contact;

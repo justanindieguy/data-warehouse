@@ -8,7 +8,7 @@ const Channel = sequelize.define(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      allowNull: false,
+      autoIncrement: true,
     },
     name: {
       type: DataTypes.STRING,
@@ -20,7 +20,7 @@ const Channel = sequelize.define(
   }
 );
 
-Channel.hasMany(Account, { foreignKey: 'channel_id', sourceKey: 'id' });
-Account.belongsTo(Channel, { foreignKey: 'channel_id', sourceKey: 'id' });
+Channel.hasMany(Account, { foreignKey: 'channelId', sourceKey: 'id' });
+Account.belongsTo(Channel, { foreignKey: 'channelId', sourceKey: 'id' });
 
 module.exports = Channel;

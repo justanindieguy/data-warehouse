@@ -8,7 +8,7 @@ const Region = sequelize.define(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      allowNull: false,
+      autoIncrement: true,
     },
     name: {
       type: DataTypes.STRING,
@@ -20,7 +20,7 @@ const Region = sequelize.define(
   }
 );
 
-Region.hasMany(Country, { foreignKey: 'region_id', sourceKey: 'id' });
-Country.belongsTo(Region, { foreignKey: 'region_id', sourceKey: 'id' });
+Region.hasMany(Country, { foreignKey: 'regionId', sourceKey: 'id' });
+Country.belongsTo(Region, { foreignKey: 'regionId', sourceKey: 'id' });
 
 module.exports = Region;

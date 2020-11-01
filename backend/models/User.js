@@ -7,21 +7,21 @@ const User = sequelize.define(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      allowNull: false,
+      autoIncrement: true,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    last_name_one: {
+    lastNameOne: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    last_name_two: {
+    lastNameTwo: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    rol_id: {
+    roleId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

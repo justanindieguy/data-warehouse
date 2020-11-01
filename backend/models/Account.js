@@ -4,12 +4,12 @@ const sequelize = require('../database/database');
 const Account = sequelize.define(
   'Account',
   {
-    channel_id: {
+    channelId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      allowNull: false,
+      autoIncrement: true,
     },
-    contact_id: {
+    contactId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
