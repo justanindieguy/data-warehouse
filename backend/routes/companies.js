@@ -1,7 +1,7 @@
 const express = require('express');
 const controller = require('../controllers/companies.controller');
-const validateCompany = require('../validation/company');
 const idValidator = require('../validation/routeId');
+const validateCompany = require('../validation/company');
 
 const router = express.Router();
 
