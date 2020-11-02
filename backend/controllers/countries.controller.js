@@ -49,6 +49,7 @@ async function getCountries(req, res) {
     return res.status(200).json(countries);
   } catch (err) {
     console.error(err);
+    return res.status(500).json({ message: SERVER_ERROR_MSG });
   }
 }
 
