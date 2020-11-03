@@ -24,6 +24,7 @@ const User = sequelize.define(
     roleId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 1,
     },
     email: {
       type: DataTypes.STRING,
