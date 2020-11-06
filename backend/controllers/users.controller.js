@@ -267,9 +267,9 @@ async function login(req, res) {
     // Create and assign a token.
     const token = jwt.sign(
       {
-        id: user.id,
-        email: user.email,
-        loggedInAs: user.loggedInAs,
+        id: user.dataValues.id,
+        email: user.dataValues.email,
+        loggedInAs: user.dataValues.loggedInAs,
       },
       TOKEN_SECRET
     );
