@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS contacts(
 CREATE TABLE IF NOT EXISTS accounts(
 	channelId INT(2) UNSIGNED,
 	contactId INT(8) UNSIGNED,
-	account VARCHAR(200) NOT NULL CHECK (account <> ""),
+	accountValue VARCHAR(200) NOT NULL CHECK (accountValue <> ""),
 	PRIMARY KEY (channelId, contactId),
 	FOREIGN KEY (channelId)
 		REFERENCES channels(id)
