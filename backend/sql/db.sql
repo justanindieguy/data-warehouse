@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS accounts(
 	channelId INT(2) UNSIGNED,
 	contactId INT(8) UNSIGNED,
 	accountValue VARCHAR(200) NOT NULL CHECK (accountValue <> ""),
-	PRIMARY KEY (channelId, contactId),
+	PRIMARY KEY (channelId, contactId, accountValue),
 	FOREIGN KEY (channelId)
 		REFERENCES channels(id)
 		ON DELETE CASCADE,
