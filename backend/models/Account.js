@@ -7,14 +7,14 @@ const Account = sequelize.define(
     channelId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true,
+      allowNull: false,
     },
     contactId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
     },
-    account: {
+    accountValue: {
       type: DataTypes.STRING,
       allowNull: false,
     },
