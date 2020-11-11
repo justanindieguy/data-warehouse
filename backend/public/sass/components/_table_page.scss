@@ -1,0 +1,26 @@
+main {
+  padding: 2%;
+  padding-bottom: 0;
+}
+
+#buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6rem;
+}
+
+#search-container {
+  width: 50%;
+}
+
+#search {
+  width: 90%;
+}
+
+.button.is-link.is-outlined.search {
+  border-color: #dbdbdb;
+}
+
+footer {
+  padding: 20px 2% 0;
+}
