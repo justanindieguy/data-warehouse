@@ -23,6 +23,11 @@
   span {
     font-weight: 600;
   }
+
+  .sortable {
+    cursor: pointer;
+    user-select: none;
+  }
 }
 
 .table tbody {
@@ -44,10 +49,13 @@
     font-size: 13px;
     font-weight: 400;
   }
+
+  .fa-ellipsis-h {
+    cursor: pointer;
+  }
 }
 
 .channel {
-  color: #0683f9;
   border-radius: 5px;
   display: inline-block;
   font-size: 14px;
@@ -72,8 +80,44 @@
   display: flex;
   align-items: center;
 
+  p {
+    display: block;
+    width: 50px;
+  }
+
   progress {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: 0 10px;
+  }
+
+  .progress.is-danger::-webkit-progress-value {
+    background-color: $red;
+  }
+
+  .progress.is-danger::-moz-progress-bar {
+    background-color: $red;
+  }
+
+  .progress.is-orange::-webkit-progress-value {
+    background-color: $orange;
+  }
+
+  .progress.is-orange::-moz-progress-bar {
+    background-color: $orange;
+  }
+
+  .progress.is-warning::-webkit-progress-value {
+    background-color: $yellow;
+  }
+
+  .progress.is-warning::-moz-progress-bar {
+    background-color: $yellow;
+  }
+
+  .progress.is-info::-webkit-progress-value {
+    background-color: $blue;
+  }
+
+  .progress.is-info::-moz-progress-bar {
+    background-color: $blue;
   }
 }

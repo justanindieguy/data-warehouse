@@ -6,6 +6,9 @@ const Contact = require('../models/Contact');
 const Account = require('../models/Account');
 const Company = require('../models/Company');
 const City = require('../models/City');
+const Country = require('../models/Country');
+const Region = require('../models/Region');
+const Channel = require('../models/Channel');
 const { SERVER_ERROR_MSG } = require('../utils/constants');
 
 const contactQuery = {
@@ -17,6 +20,8 @@ const contactQuery = {
     'email',
     [sequelize.col('Company.name'), 'company'],
     [sequelize.col('City.name'), 'city'],
+    [sequelize.col('City.Country.name'), 'country'],
+    [sequelize.col('City.Country.Region.name'), 'region'],
     'position',
     'interest',
   ],
@@ -28,6 +33,36 @@ const contactQuery = {
     },
     {
       model: City,
+      required: true,
+      attributes: [],
+      include: [
+        {
+          model: Country,
+          required: true,
+          attributes: [],
+          include: [
+            {
+              model: Region,
+              required: true,
+              attributes: [],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+const accountQuery = {
+  attributes: [
+    'channelId',
+    'contactId',
+    'accountValue',
+    [sequelize.col('Channel.name'), 'channelName'],
+  ],
+  include: [
+    {
+      model: Channel,
       required: true,
       attributes: [],
     },
@@ -68,8 +103,23 @@ async function checkConflictsAccount(channelId, contactId, accountValue) {
 }
 
 async function getContacts(req, res) {
+  const sortBy = req.query.sortBy || 'name';
+  const ascending = req.query.ascending || 'true';
+  const sortString = ascending === 'true' ? `${sortBy} ASC` : `${sortBy} DESC`;
+  let limit = parseInt(req.query.limit, 10) || 10;
+  const offset = parseInt(req.query.offset, 10) || 0;
+
+  if (limit > 20) {
+    limit = 20;
+  }
+
   try {
-    const contacts = await Contact.findAll(contactQuery);
+    const contacts = await Contact.findAll({
+      ...contactQuery,
+      order: sequelize.literal(sortString),
+      limit,
+      offset,
+    });
 
     if (contacts.length === 0) {
       return res.status(404).json({ message: 'There are no contacts yet.' });
@@ -80,6 +130,7 @@ async function getContacts(req, res) {
 
       // eslint-disable-next-line no-await-in-loop
       const accounts = await Account.findAll({
+        ...accountQuery,
         where: { contactId: contactData.id },
       });
 
