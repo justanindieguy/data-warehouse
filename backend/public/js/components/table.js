@@ -1,46 +1,46 @@
 const createTable = async ({ root, fetchData, getColumns, renderOption }) => {
   root.innerHTML = `
-  <table class="table">
-    ${getColumns()}
-    <tbody></tbody>
-  </table>
+    <table class="table">
+      ${getColumns()}
+      <tbody></tbody>
+    </table>
 
-  <div class="table-footer has-text-grey is-flex is-justify-content-space-between is-align-items-center">
-    <div class="is-flex is-align-items-center">
-      <p>Filas por página</p>
-      <div class="dropdown">
-        <div class="dropdown-trigger">
-          <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-            <span class="button-text">10</span>
-            <span class="icon is-small">
-              <i class="fas fa-angle-down" aria-hidden="true"></i>
-            </span>
-          </button>
-        </div>
-        <div class="dropdown-menu" id="dropdown-menu" role="menu">
-          <div class="dropdown-content">
-            <a class="dropdown-item">
-              10
-            </a>
-            <a class="dropdown-item">
-              15
-            </a>
-            <a class="dropdown-item">
-              20
-            </a>
+    <div class="table-footer has-text-grey is-flex is-justify-content-space-between is-align-items-center">
+      <div class="is-flex is-align-items-center">
+        <p>Filas por página</p>
+        <div class="dropdown">
+          <div class="dropdown-trigger">
+            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+              <span class="button-text">10</span>
+              <span class="icon is-small">
+                <i class="fas fa-angle-down" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+          <div class="dropdown-menu" id="dropdown-menu" role="menu">
+            <div class="dropdown-content">
+              <a class="dropdown-item">
+                10
+              </a>
+              <a class="dropdown-item">
+                15
+              </a>
+              <a class="dropdown-item">
+                20
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="is-flex is-align-items-center">
-      <p class="page-info"></p>
-      <div class="ml-6 is-unselectable">
-        <i class="fas fa-chevron-left left mr-2 is-clickable"></i>
-        <i class="fas fa-chevron-right right ml-2 mr-2 is-clickable"></i>
+      <div class="is-flex is-align-items-center">
+        <p class="page-info"></p>
+        <div class="ml-6 is-unselectable">
+          <i class="fas fa-chevron-left left mr-2 is-clickable"></i>
+          <i class="fas fa-chevron-right right ml-2 mr-2 is-clickable"></i>
+        </div>
       </div>
-    </div>
-  </div
+    </div
   `;
 
   // Table elements.
