@@ -8,6 +8,7 @@ const {
 } = process.env;
 
 module.exports = new Sequelize(DATABASE, USER, PASSWORD, {
+  logging: false,
   host: 'localhost',
   dialect: 'mariadb',
   dialectOptions: {

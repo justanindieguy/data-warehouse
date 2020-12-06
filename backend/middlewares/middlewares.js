@@ -11,7 +11,6 @@ module.exports = {
 
     next();
   },
-
   deleteEntity(Entity, entityName) {
     return async (req, res) => {
       const { id } = req.params;

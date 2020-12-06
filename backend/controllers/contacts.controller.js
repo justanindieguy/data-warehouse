@@ -103,16 +103,23 @@ async function getContacts(req, res) {
       return res.status(404).json({ message: 'There are no contacts yet.' });
     }
 
+    const requests = [];
+
     for (let i = 0; i < contacts.length; i += 1) {
       const contactData = contacts[i].dataValues;
 
-      // eslint-disable-next-line no-await-in-loop
-      const accounts = await Account.findAll({
-        ...accountQuery,
-        where: { contactId: contactData.id },
-      });
+      requests.push(
+        Account.findAll({
+          ...accountQuery,
+          where: { contactId: contactData.id },
+        })
+      );
+    }
 
-      contactData.accounts = accounts;
+    const accounts = await Promise.all(requests);
+
+    for (let i = 0; i < contacts.length; i += 1) {
+      contacts[i].dataValues.accounts = accounts[i];
     }
 
     return res.status(200).json(contacts);
