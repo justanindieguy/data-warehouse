@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize');
-const { Op } = require('sequelize');
 
 const { SERVER_ERROR_MSG } = require('../utils/constants');
 const sequelize = require('../database/database');
@@ -42,50 +41,6 @@ const companyQuery = {
   ],
 };
 
-async function checkConflicts(res, name, email, phone, id) {
-  let nameExists;
-  let emailExists;
-  let phoneExists;
-
-  if (id) {
-    nameExists = await Company.findOne({
-      where: { name, id: { [Op.ne]: id } },
-    });
-    emailExists = await Company.findOne({
-      where: { email, id: { [Op.ne]: id } },
-    });
-    phoneExists = await Company.findOne({
-      where: { phone, id: { [Op.ne]: id } },
-    });
-  } else {
-    nameExists = await Company.findOne({ where: { name } });
-    emailExists = await Company.findOne({ where: { email } });
-    phoneExists = await Company.findOne({ where: { phone } });
-  }
-
-  if (nameExists) {
-    res
-      .status(409)
-      .json({ message: 'A company with the provided name already exists.' });
-    return true;
-  }
-
-  if (emailExists) {
-    res.status(409).json({
-      message: 'A company with the provided email already exists.',
-    });
-    return true;
-  }
-
-  if (phoneExists) {
-    res.status(409).json({
-      message: 'A company with the provided phone number already exists.',
-    });
-  }
-
-  return false;
-}
-
 async function getCompanies(req, res) {
   try {
     const companies = await Company.findAll(companyQuery);
@@ -122,11 +77,6 @@ async function addCompany(req, res) {
   const { name, address, email, phone, cityId } = req.body;
 
   try {
-    // If there are conflicts don't execute the query.
-    if (await checkConflicts(res, name, email, phone)) {
-      return;
-    }
-
     const newProject = await Company.create({
       name,
       address,
@@ -156,10 +106,6 @@ async function updateCompany(req, res) {
   const { name, address, email, phone, cityId } = req.body;
 
   try {
-    if (await checkConflicts(res, name, email, phone, id)) {
-      return;
-    }
-
     const company = await Company.findOne({ where: { id } });
 
     if (company) {
@@ -182,30 +128,9 @@ async function updateCompany(req, res) {
   }
 }
 
-async function deleteCompany(req, res) {
-  const { id } = req.params;
-
-  try {
-    const deleteRowCount = await Company.destroy({ where: { id } });
-
-    if (deleteRowCount === 0) {
-      return res.status(404).json({ message: 'Company not found.' });
-    }
-
-    return res.status(200).json({
-      message: 'Company deleted successfully.',
-      deletedRows: deleteRowCount,
-    });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: SERVER_ERROR_MSG });
-  }
-}
-
 module.exports = {
   getCompanies,
   getOneCompany,
   addCompany,
   updateCompany,
-  deleteCompany,
 };

@@ -1,6 +1,4 @@
 const Sequelize = require('sequelize');
-const { validationResult } = require('express-validator');
-const { Op } = require('sequelize');
 
 const sequelize = require('../database/database');
 const Contact = require('../models/Contact');
@@ -70,27 +68,6 @@ const accountQuery = {
   ],
 };
 
-async function checkConflictsContact(res, email, id) {
-  let emailExists;
-
-  if (id) {
-    emailExists = await Contact.findOne({
-      where: { email, id: { [Op.ne]: id } },
-    });
-  } else {
-    emailExists = await Contact.findOne({ where: { email } });
-  }
-
-  if (emailExists) {
-    res
-      .status(409)
-      .json({ message: 'A contact with the provided email already exists.' });
-    return true;
-  }
-
-  return false;
-}
-
 async function checkConflictsAccount(channelId, contactId, accountValue) {
   const accountExists = await Account.findOne({
     where: { channelId, contactId, accountValue },
@@ -146,12 +123,7 @@ async function getContacts(req, res) {
 }
 
 async function getOneContact(req, res) {
-  const errors = validationResult(req);
   const { id } = req.params;
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
 
   try {
     const contact = await Contact.findOne({ ...contactQuery, where: { id } });
@@ -201,7 +173,6 @@ async function addAccount(account, contactId, queryInfo) {
 }
 
 async function addContact(req, res) {
-  const errors = validationResult(req);
   const {
     name,
     lastNameOne,
@@ -214,16 +185,7 @@ async function addContact(req, res) {
     accounts,
   } = req.body;
 
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
   try {
-    // If there are conflicts don't execute the query.
-    if (await checkConflictsContact(res, name)) {
-      return;
-    }
-
     const newContact = await Contact.create({
       name,
       lastNameOne,
@@ -271,7 +233,6 @@ async function addContact(req, res) {
 }
 
 async function updateContact(req, res) {
-  const errors = validationResult(req);
   const { id } = req.params;
   const {
     name,
@@ -284,15 +245,7 @@ async function updateContact(req, res) {
     interest,
   } = req.body;
 
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
   try {
-    if (await checkConflictsContact(res, email, id)) {
-      return;
-    }
-
     const contact = await Contact.findOne({ where: { id } });
 
     if (contact) {
@@ -318,35 +271,9 @@ async function updateContact(req, res) {
   }
 }
 
-async function deleteContact(req, res) {
-  const errors = validationResult(req);
-  const { id } = req.params;
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  try {
-    const deleteRowCount = await Contact.destroy({ where: { id } });
-
-    if (deleteRowCount === 0) {
-      return res.status(404).json({ message: 'Contact not found.' });
-    }
-
-    return res.status(200).json({
-      message: 'Contact deleted successfully.',
-      deletedRows: deleteRowCount,
-    });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: SERVER_ERROR_MSG });
-  }
-}
-
 module.exports = {
   getContacts,
   getOneContact,
   addContact,
   updateContact,
-  deleteContact,
 };

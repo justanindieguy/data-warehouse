@@ -4,7 +4,6 @@ const controller = require('../controllers/contacts.controller');
 const {
   requireValidId,
   requireName,
-  requireValidEmail,
   requireValidCityId,
   requireValidCompanyId,
 } = require('../validation/generalValidators');
@@ -13,21 +12,23 @@ const {
   checkLastNameTwo,
 } = require('../validation/person');
 const {
+  requireValidEmail,
   requirePosition,
   requireValidInterest,
 } = require('../validation/contact');
+const { handleErrors, deleteEntity } = require('../middlewares/middlewares');
+const Contact = require('../models/Contact');
 
 const router = express.Router();
 
 router.get('/', controller.getContacts);
 
-router.get('/:id', [requireValidId], controller.getOneContact);
+router.get('/:id', [requireValidId], handleErrors, controller.getOneContact);
 
 router.post(
   '/',
   [
     requireName,
-    requireLastNameOne,
     requireLastNameOne,
     checkLastNameTwo,
     requireValidEmail,
@@ -36,6 +37,7 @@ router.post(
     requirePosition,
     requireValidInterest,
   ],
+  handleErrors,
   controller.addContact
 );
 
@@ -45,7 +47,6 @@ router.put(
     requireValidId,
     requireName,
     requireLastNameOne,
-    requireLastNameOne,
     checkLastNameTwo,
     requireValidEmail,
     requireValidCompanyId,
@@ -53,9 +54,15 @@ router.put(
     requirePosition,
     requireValidInterest,
   ],
+  handleErrors,
   controller.updateContact
 );
 
-router.delete('/:id', [requireValidId], controller.deleteContact);
+router.delete(
+  '/:id',
+  [requireValidId],
+  handleErrors,
+  deleteEntity(Contact, 'Contact')
+);
 
 module.exports = router;

@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
-const { Op } = require('sequelize');
-const { validationResult } = require('express-validator');
+
 const { SERVER_ERROR_MSG } = require('../utils/constants');
 const sequelize = require('../database/database');
 const City = require('../models/City');
@@ -30,29 +29,6 @@ const cityQuery = {
   ],
 };
 
-async function checkConflicts(res, name, countryId, id) {
-  let nameExists;
-
-  if (id) {
-    nameExists = await City.findOne({
-      where: { [Op.and]: [{ name }, { countryId }], id: { [Op.ne]: id } },
-    });
-  } else {
-    nameExists = await City.findOne({
-      where: { [Op.and]: [{ name }, { countryId }] },
-    });
-  }
-
-  if (nameExists) {
-    res.status(409).json({
-      message: "There's already a city in this country with this name.",
-    });
-    return true;
-  }
-
-  return false;
-}
-
 async function getCities(req, res) {
   try {
     const cities = await City.findAll(cityQuery);
@@ -69,12 +45,7 @@ async function getCities(req, res) {
 }
 
 async function getOneCity(req, res) {
-  const errors = validationResult(req);
   const { id } = req.params;
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
 
   try {
     const city = await City.findOne({ ...cityQuery, where: { id } });
@@ -91,18 +62,9 @@ async function getOneCity(req, res) {
 }
 
 async function addCity(req, res) {
-  const errors = validationResult(req);
   const { name, countryId } = req.body;
 
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
   try {
-    if (await checkConflicts(res, name, countryId)) {
-      return;
-    }
-
     const newCity = await City.create({ name, countryId });
 
     if (newCity) {
@@ -122,19 +84,10 @@ async function addCity(req, res) {
 }
 
 async function updateCity(req, res) {
-  const errors = validationResult(req);
   const { id } = req.params;
   const { name, countryId } = req.body;
 
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
   try {
-    if (await checkConflicts(res, name, countryId, id)) {
-      return;
-    }
-
     const city = await City.findOne({ where: { id } });
 
     if (city) {
@@ -157,29 +110,4 @@ async function updateCity(req, res) {
   }
 }
 
-async function deleteCity(req, res) {
-  const errors = validationResult(req);
-  const { id } = req.params;
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  try {
-    const deleteRowCount = await City.destroy({ where: { id } });
-
-    if (deleteRowCount === 0) {
-      return res.status(404).json({ message: 'City not found.' });
-    }
-
-    return res.status(200).json({
-      message: 'City deleted successfully.',
-      deleteRows: deleteRowCount,
-    });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: SERVER_ERROR_MSG });
-  }
-}
-
-module.exports = { getCities, getOneCity, addCity, updateCity, deleteCity };
+module.exports = { getCities, getOneCity, addCity, updateCity };

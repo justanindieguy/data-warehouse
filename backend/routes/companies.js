@@ -3,12 +3,16 @@ const express = require('express');
 const controller = require('../controllers/companies.controller');
 const {
   requireValidId,
-  requireName,
-  requireValidEmail,
   requireValidCityId,
 } = require('../validation/generalValidators');
-const { requireAddress, requireValidPhone } = require('../validation/company');
-const { handleErrors } = require('../middlewares/middlewares');
+const {
+  requireName,
+  requireValidEmail,
+  requireValidPhone,
+  requireAddress,
+} = require('../validation/company');
+const { handleErrors, deleteEntity } = require('../middlewares/middlewares');
+const Company = require('../models/Company');
 
 const router = express.Router();
 
@@ -43,6 +47,11 @@ router.put(
   controller.updateCompany
 );
 
-router.delete('/:id', [requireValidId], handleErrors, controller.deleteCompany);
+router.delete(
+  '/:id',
+  [requireValidId],
+  handleErrors,
+  deleteEntity(Company, 'Company')
+);
 
 module.exports = router;
