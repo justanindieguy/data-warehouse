@@ -1,14 +1,61 @@
 const express = require('express');
+
 const controller = require('../controllers/contacts.controller');
-const idValidator = require('../validation/routeId');
-const validateContact = require('../validation/contact');
+const {
+  requireValidId,
+  requireName,
+  requireValidEmail,
+  requireValidCityId,
+  requireValidCompanyId,
+} = require('../validation/generalValidators');
+const {
+  requireLastNameOne,
+  checkLastNameTwo,
+} = require('../validation/person');
+const {
+  requirePosition,
+  requireValidInterest,
+} = require('../validation/contact');
 
 const router = express.Router();
 
 router.get('/', controller.getContacts);
-router.get('/:id', idValidator, controller.getOneContact);
-router.post('/', validateContact, controller.addContact);
-router.put('/:id', idValidator, validateContact, controller.updateContact);
-router.delete('/:id', idValidator, controller.deleteContact);
+
+router.get('/:id', [requireValidId], controller.getOneContact);
+
+router.post(
+  '/',
+  [
+    requireName,
+    requireLastNameOne,
+    requireLastNameOne,
+    checkLastNameTwo,
+    requireValidEmail,
+    requireValidCompanyId,
+    requireValidCityId,
+    requirePosition,
+    requireValidInterest,
+  ],
+  controller.addContact
+);
+
+router.put(
+  '/:id',
+  [
+    requireValidId,
+    requireName,
+    requireLastNameOne,
+    requireLastNameOne,
+    checkLastNameTwo,
+    requireValidEmail,
+    requireValidCompanyId,
+    requireValidCityId,
+    requirePosition,
+    requireValidInterest,
+  ],
+  controller.updateContact
+);
+
+router.delete('/:id', [requireValidId], controller.deleteContact);
 
 module.exports = router;

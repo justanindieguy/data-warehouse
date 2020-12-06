@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const { validationResult } = require('express-validator');
 const { Op } = require('sequelize');
+
 const sequelize = require('../database/database');
 const Contact = require('../models/Contact');
 const Account = require('../models/Account');

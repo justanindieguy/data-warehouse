@@ -1,24 +1,23 @@
 const { body } = require('express-validator');
 
-module.exports = [
-  body('name').not().isEmpty().withMessage('Name is mandatory.'),
-  body('address').not().isEmpty().withMessage('Address is mandatory.'),
-  body('email')
-    .isEmail()
-    .withMessage('You must enter a valid email address.')
+module.exports = {
+  requireAddress: body('address')
+    .trim()
     .not()
     .isEmpty()
-    .withMessage('Email is mandatory.'),
-  body('phone')
+    .withMessage('Address is mandatory.'),
+  requireValidPhone: body('phone')
+    .trim()
     .isInt()
     .withMessage('Only integers are allowed.')
     .not()
     .isEmpty()
     .withMessage('Phone is mandatory.'),
-  body('cityId')
+  requireValidCityId: body('cityId')
+    .trim()
     .isInt()
     .withMessage('Only integers are allowed.')
     .not()
     .isEmpty()
     .withMessage('You must provide an ID for a city.'),
-];
+};

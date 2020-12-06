@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const { Op } = require('sequelize');
-const { validationResult } = require('express-validator');
+
 const { SERVER_ERROR_MSG } = require('../utils/constants');
 const sequelize = require('../database/database');
 const Company = require('../models/Company');
@@ -102,12 +102,7 @@ async function getCompanies(req, res) {
 }
 
 async function getOneCompany(req, res) {
-  const errors = validationResult(req);
   const { id } = req.params;
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
 
   try {
     const company = await Company.findOne({ ...companyQuery, where: { id } });
@@ -124,12 +119,7 @@ async function getOneCompany(req, res) {
 }
 
 async function addCompany(req, res) {
-  const errors = validationResult(req);
   const { name, address, email, phone, cityId } = req.body;
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
 
   try {
     // If there are conflicts don't execute the query.
@@ -162,13 +152,8 @@ async function addCompany(req, res) {
 }
 
 async function updateCompany(req, res) {
-  const errors = validationResult(req);
   const { id } = req.params;
   const { name, address, email, phone, cityId } = req.body;
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
 
   try {
     if (await checkConflicts(res, name, email, phone, id)) {
@@ -198,12 +183,7 @@ async function updateCompany(req, res) {
 }
 
 async function deleteCompany(req, res) {
-  const errors = validationResult(req);
   const { id } = req.params;
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
 
   try {
     const deleteRowCount = await Company.destroy({ where: { id } });
