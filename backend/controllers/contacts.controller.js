@@ -122,7 +122,14 @@ async function getContacts(req, res) {
       contacts[i].dataValues.accounts = accounts[i];
     }
 
-    return res.status(200).json(contacts);
+    // Get total number of contacts;
+    const total = await sequelize.query('SELECT COUNT(*) FROM contacts', {
+      type: Sequelize.QueryTypes.SELECT,
+    });
+
+    return res
+      .status(200)
+      .json({ total: total[0]['COUNT(*)'], items: contacts });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: SERVER_ERROR_MSG });

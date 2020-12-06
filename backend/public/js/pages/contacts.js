@@ -82,58 +82,52 @@ createTable({
     const row = document.createElement('tr');
     row.setAttribute('data-id', String(id));
     row.innerHTML = `
-    <th class="check-input">
-      <input type="checkbox" />
-    </th>
+      <th class="check-input">
+        <input type="checkbox" />
+      </th>
 
-    <th class="contact-info">
-      <figure class="image is-32x32">
-        <img
-          src="https://bulma.io/images/placeholders/32x32.png"
-          alt="Demo"
-        />
-      </figure>
-      <div class="contact-text">
-        <p class="title is-6">${fullName}</p>
-        <p class="subtitle is-6 has-text-grey-light">
-          ${email}
-        </p>
-      </div>
-    </th>
+      <th class="contact-info is-flex is-align-items-center">
+        <figure class="image is-32x32">
+          <img
+            src="https://bulma.io/images/placeholders/32x32.png"
+            alt="Demo"
+          />
+        </figure>
+        <div class="contact-text">
+          <p class="title is-6">${fullName}</p>
+          <p class="subtitle is-6 has-text-grey-light">
+            ${email}
+          </p>
+        </div>
+      </th>
 
-    <th>
-      <p class="title is-6">${country}</p>
-      <p class="subtitle is-6 has-text-grey-light">${region}</p>
-    </th>
+      <th>
+        <p class="title is-6">${country}</p>
+        <p class="subtitle is-6 has-text-grey-light">${region}</p>
+      </th>
 
-    <th>
-      <p class="title is-6">${company}</p>
-    </th>
+      <th>
+        <p class="title is-6">${company}</p>
+      </th>
 
-    <th>
-      <p class="title is-6">${position}</p>
-    </th>
+      <th>
+        <p class="title is-6">${position}</p>
+      </th>
 
-    <th class="accounts">
-      <!--
-      <div class="channel has-background-info-light">WhatsApp</div>
-      <div class="channel has-background-info-light">Telegram</div>
-      <i class="fas fa-ellipsis-h has-text-grey-light"></i>
-      -->
-    </th>
+      <th class="accounts"></th>
 
-    <th>
-      <div class="interest-bar">
-        <p>${interest}%</p>
-        <progress class="progress is-small" value="${interest}" max="100">
-          ${interest}
-        </progress>
-      </div>
-    </th>
+      <th>
+        <div class="interest-bar">
+          <p>${interest}%</p>
+          <progress class="progress is-small" value="${interest}" max="100">
+            ${interest}
+          </progress>
+        </div>
+      </th>
 
-    <th class="has-text-centered">
-      <i class="fas fa-ellipsis-h has-text-grey-light"></i>
-    </th>
+      <th class="has-text-centered">
+        <i class="fas fa-ellipsis-h has-text-grey-light is-clickable"></i>
+      </th>
     `;
 
     const accountsContainer = row.querySelector('.accounts');

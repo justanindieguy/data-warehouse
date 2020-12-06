@@ -49,9 +49,13 @@
     font-size: 13px;
     font-weight: 400;
   }
+}
 
-  .fa-ellipsis-h {
-    cursor: pointer;
+.table-footer {
+  margin-bottom: 150px;
+
+  .button {
+    border: none;
   }
 }
 
@@ -64,9 +68,6 @@
 }
 
 .contact-info {
-  display: flex;
-  align-items: center;
-
   img {
     border-radius: 100%;
   }
