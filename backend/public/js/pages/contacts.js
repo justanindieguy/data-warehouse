@@ -64,8 +64,7 @@ createTable({
     const {
       id,
       name,
-      lastNameOne,
-      lastNameTwo,
+      lastName,
       email,
       country,
       region,
@@ -75,9 +74,7 @@ createTable({
       accounts,
     } = item;
 
-    const fullName = lastNameTwo
-      ? `${name} ${lastNameOne} ${lastNameTwo}`
-      : `${name} ${lastNameOne}`;
+    const fullName = `${name} ${lastName}`;
 
     const row = document.createElement('tr');
     row.setAttribute('data-id', String(id));
