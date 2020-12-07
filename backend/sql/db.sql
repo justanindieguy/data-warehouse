@@ -24,8 +24,7 @@ CREATE TABLE IF NOT EXISTS roles(
 CREATE TABLE IF NOT EXISTS users(
 	id INT(11) UNSIGNED AUTO_INCREMENT,
 	name VARCHAR(100) NOT NULL CHECK (name <> ""),
-	lastNameOne VARCHAR(100) NOT NULL CHECK (lastNameOne <> ""),
-	lastNameTwo VARCHAR(100) DEFAULT NULL CHECK (lastNameTwo <> ""),
+	lastName VARCHAR(100) NOT NULL CHECK (lastName <> ""),
 	roleId INT(2) UNSIGNED NOT NULL DEFAULT 1,
 	email VARCHAR(150) NOT NULL CHECK (email <> ""),
 	password VARCHAR(500) NOT NULL CHECK (password <> ""),
@@ -71,8 +70,7 @@ CREATE TABLE IF NOT EXISTS companies(
 CREATE TABLE IF NOT EXISTS contacts(
 	id INT(8) UNSIGNED AUTO_INCREMENT,
 	name VARCHAR(100) NOT NULL CHECK (name <> ""),
-	lastNameOne VARCHAR(100) NOT NULL CHECK (lastNameOne <> ""),
-	lastNameTwo VARCHAR(100) DEFAULT NULL CHECK (lastNameTwo <> ""),
+	lastName VARCHAR(100) NOT NULL CHECK (lastName <> ""),
 	email VARCHAR(150) NOT NULL CHECK (email <> ""),
 	companyId INT(6) UNSIGNED NOT NULL,
 	cityId INT(6) UNSIGNED NOT NULL,

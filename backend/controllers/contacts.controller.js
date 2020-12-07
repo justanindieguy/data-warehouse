@@ -14,8 +14,7 @@ const contactQuery = {
   attributes: [
     'id',
     'name',
-    'lastNameOne',
-    'lastNameTwo',
+    'lastName',
     'email',
     [sequelize.col('Company.name'), 'company'],
     [sequelize.col('City.name'), 'city'],
@@ -189,8 +188,7 @@ async function addAccount(account, contactId, queryInfo) {
 async function addContact(req, res) {
   const {
     name,
-    lastNameOne,
-    lastNameTwo,
+    lastName,
     email,
     companyId,
     cityId,
@@ -202,8 +200,7 @@ async function addContact(req, res) {
   try {
     const newContact = await Contact.create({
       name,
-      lastNameOne,
-      lastNameTwo,
+      lastName,
       email,
       companyId,
       cityId,
@@ -250,8 +247,7 @@ async function updateContact(req, res) {
   const { id } = req.params;
   const {
     name,
-    lastNameOne,
-    lastNameTwo,
+    lastName,
     email,
     companyId,
     cityId,
@@ -265,8 +261,7 @@ async function updateContact(req, res) {
     if (contact) {
       await contact.update({
         name,
-        lastNameOne,
-        lastNameTwo,
+        lastName,
         email,
         companyId,
         cityId,

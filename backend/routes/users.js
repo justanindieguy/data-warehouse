@@ -4,13 +4,14 @@ const controller = require('../controllers/users.controller');
 const {
   requireValidId,
   requireName,
-  requireValidEmail,
 } = require('../validation/generalValidators');
+const { requireLastName } = require('../validation/person');
 const {
-  requireLastNameOne,
-  checkLastNameTwo,
-} = require('../validation/person');
-const { checkRoleId, requireValidPassword } = require('../validation/user');
+  requireValidEmail,
+  requireValidPassword,
+  requirePasswordConfirm,
+  checkRoleId,
+} = require('../validation/user');
 const { handleErrors, deleteEntity } = require('../middlewares/middlewares');
 const User = require('../models/User');
 
@@ -24,11 +25,11 @@ router.post(
   '/',
   [
     requireName,
-    requireLastNameOne,
-    checkLastNameTwo,
+    requireLastName,
     requireValidEmail,
     checkRoleId,
     requireValidPassword,
+    requirePasswordConfirm,
   ],
   handleErrors,
   controller.registerUser
@@ -39,11 +40,11 @@ router.put(
   [
     requireValidId,
     requireName,
-    requireLastNameOne,
-    checkLastNameTwo,
+    requireLastName,
     requireValidEmail,
     checkRoleId,
     requireValidPassword,
+    requirePasswordConfirm,
   ],
   handleErrors,
   controller.updateUser

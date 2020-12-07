@@ -69,24 +69,6 @@ const createLogin = ({ root, sendCredentials }) => {
     }
   });
 
-  passwordInput.addEventListener('input', () => {
-    const valueLength = passwordInput.value.length;
-
-    if (valueLength >= 6 && valueLength <= 15) {
-      passwordAlert.innerText = '';
-      passwordInput.classList.remove('is-danger');
-    } else {
-      passwordAlert.innerText =
-        'La contraseña debe tener un mínimo de 6 caracteres y un máximo de 15.';
-      passwordInput.classList.add('is-danger');
-    }
-
-    if (emailAlert.innerText) {
-      emailAlert.innerText = '';
-      emailInput.classList.remove('is-danger');
-    }
-  });
-
   root.addEventListener('submit', async (evt) => {
     evt.preventDefault();
 

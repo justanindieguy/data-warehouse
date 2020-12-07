@@ -7,10 +7,7 @@ const {
   requireValidCityId,
   requireValidCompanyId,
 } = require('../validation/generalValidators');
-const {
-  requireLastNameOne,
-  checkLastNameTwo,
-} = require('../validation/person');
+const { requireLastName } = require('../validation/person');
 const {
   requireValidEmail,
   requirePosition,
@@ -29,8 +26,7 @@ router.post(
   '/',
   [
     requireName,
-    requireLastNameOne,
-    checkLastNameTwo,
+    requireLastName,
     requireValidEmail,
     requireValidCompanyId,
     requireValidCityId,
@@ -46,8 +42,7 @@ router.put(
   [
     requireValidId,
     requireName,
-    requireLastNameOne,
-    checkLastNameTwo,
+    requireLastName,
     requireValidEmail,
     requireValidCompanyId,
     requireValidCityId,

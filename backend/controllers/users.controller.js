@@ -17,9 +17,7 @@ const userQuery = {
         'CONCAT',
         sequelize.col('User.name'),
         ' ',
-        sequelize.col('User.lastNameOne'),
-        ' ',
-        sequelize.col('User.lastNameTwo')
+        sequelize.col('User.lastName')
       ),
       'name',
     ],
@@ -80,7 +78,7 @@ async function getOneUser(req, res) {
 
 async function registerUser(req, res) {
   let { password } = req.body;
-  const { name, lastNameOne, lastNameTwo, email } = req.body;
+  const { name, lastName, email } = req.body;
 
   try {
     const salt = await bcrypt.genSalt(10);
@@ -89,8 +87,7 @@ async function registerUser(req, res) {
 
     const newUser = await User.create({
       name,
-      lastNameOne,
-      lastNameTwo,
+      lastName,
       email,
       password,
     });
@@ -100,7 +97,7 @@ async function registerUser(req, res) {
         message: 'User created successfully.',
         data: {
           id: newUser.id,
-          name: `${newUser.name} ${newUser.lastNameOne} ${newUser.lastNameTwo}`,
+          name: `${newUser.name} ${newUser.lastName}`,
           email: newUser.email,
         },
       });
@@ -114,7 +111,7 @@ async function registerUser(req, res) {
 
 async function updateUser(req, res) {
   const { id } = req.params;
-  const { name, lastNameOne, lastNameTwo, roleId, email } = req.body;
+  const { name, lastName, roleId, email } = req.body;
   let { password } = req.body;
 
   try {
@@ -129,8 +126,7 @@ async function updateUser(req, res) {
 
       await user.update({
         name,
-        lastNameOne,
-        lastNameTwo,
+        lastName,
         roleId,
         email,
         password,
@@ -143,7 +139,7 @@ async function updateUser(req, res) {
       message: 'User updated successfully.',
       data: {
         id: user.id,
-        name: `${user.name} ${user.lastNameOne} ${user.lastNameTwo}`,
+        name: `${user.name} ${user.lastName}`,
         roleId: user.roleId,
         email: user.email,
       },

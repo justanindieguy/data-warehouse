@@ -7,10 +7,10 @@ module.exports = {
   requireValidEmail: body('email')
     .trim()
     .isEmail()
-    .withMessage('You must enter a valid email.')
+    .withMessage('Debes ingresar un email válido.')
     .not()
     .isEmpty()
-    .withMessage('Email is mandatory')
+    .withMessage('El email es obligatorio.')
     .custom(async (email, { req }) => {
       const { id } = req.params;
       let emailExists;
@@ -24,7 +24,7 @@ module.exports = {
       }
 
       if (emailExists) {
-        throw new Error('A user with the provided email already exists.');
+        throw new Error('Ya existe un usuario con el email proporcionado.');
       }
 
       return true;
@@ -33,14 +33,32 @@ module.exports = {
     .trim()
     .isLength({ min: 6, max: 15 })
     .withMessage(
-      'Password must have a minimum lenght of 6 characters and a maximum of 15.'
+      'La contraseña debe tener una longitud mínima de 6 caracteres y máxima de 15.'
     )
     .not()
     .isEmpty()
-    .withMessage('Password is mandatory.'),
+    .withMessage('La contraseña es obligatoria.'),
+  requirePasswordConfirm: body('passwordConfirm')
+    .trim()
+    .isLength({ min: 6, max: 15 })
+    .withMessage(
+      'La contraseña debe tener una longitud mínima de 6 caracteres y máxima de 15.'
+    )
+    .not()
+    .isEmpty()
+    .withMessage('La confirmación de la contraseña es obligatoria.')
+    .custom((passwordConfirm, { req }) => {
+      const { password } = req.body;
+
+      if (passwordConfirm !== password) {
+        throw new Error('Las contraseñas debes coincidir.');
+      }
+
+      return true;
+    }),
   checkRoleId: body('roleId')
     .trim()
     .isInt()
-    .withMessage('Only integers are allowed.')
+    .withMessage('Solo se permiten números enteros.')
     .optional(),
 };

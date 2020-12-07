@@ -1,10 +1,9 @@
 const { body } = require('express-validator');
 
 module.exports = {
-  requireLastNameOne: body('lastNameOne')
+  requireLastName: body('lastName')
     .trim()
     .not()
     .isEmpty()
-    .withMessage('1st last name is mandatory.'),
-  checkLastNameTwo: body('lastNameTwo').trim().optional(),
+    .withMessage('Last name is mandatory.'),
 };
