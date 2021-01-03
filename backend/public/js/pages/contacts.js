@@ -15,49 +15,49 @@ createTable({
   },
   getColumns: () => {
     return `
-    <colgroup>
-      <col span="1" style="width: 5%" />
-      <col span="1" style="width: 20%" />
-      <col span="1" style="width: 12.5%" />
-      <col span="1" style="width: 12.5%" />
-      <col span="1" style="width: 12.5%" />
-      <col span="1" style="width: 15%" />
-      <col span="1" style="width: 15%" />
-      <col span="1" style="width: 7.5%" />
-    </colgroup>
-    <thead>
-      <tr>
-        <th class="check-input">
-          <input type="checkbox" />
-        </th>
-        <th class="sortable" data-field="name">
-          <span>Contacto</span>
-          <i class="fas fa-sort-amount-down"></i>
-        </th>
-        <th class="sortable" data-field="country">
-          <span>País/Región</span>
-          <i class="fas fa-sort-amount-down"></i>
-        </th>
-        <th class="sortable" data-field="company">
-          <span>Compañía</span>
-          <i class="fas fa-sort-amount-down"></i>
-        </th>
-        <th class="sortable" data-field="position">
-          <span>Cargo</span>
-          <i class="fas fa-sort-amount-down"></i>
-        </th>
-        <th>
-          <span>Canal preferido</span>
-        </th>
-        <th class="sortable" data-field="interest">
-          <span>Interés</span>
-          <i class="fas fa-sort-amount-down"></i>
-        </th>
-        <th>
-          <span>Acciones</span>
-        </th>
-      </tr>
-    </thead>
+      <colgroup>
+        <col span="1" style="width: 5%" />
+        <col span="1" style="width: 20%" />
+        <col span="1" style="width: 12.5%" />
+        <col span="1" style="width: 12.5%" />
+        <col span="1" style="width: 12.5%" />
+        <col span="1" style="width: 15%" />
+        <col span="1" style="width: 15%" />
+        <col span="1" style="width: 7.5%" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th class="check-input">
+            <input type="checkbox" />
+          </th>
+          <th class="sortable" data-field="name">
+            <span>Contacto</span>
+            <i class="fas fa-sort-amount-down"></i>
+          </th>
+          <th class="sortable" data-field="country">
+            <span>País/Región</span>
+            <i class="fas fa-sort-amount-down"></i>
+          </th>
+          <th class="sortable" data-field="company">
+            <span>Compañía</span>
+            <i class="fas fa-sort-amount-down"></i>
+          </th>
+          <th class="sortable" data-field="position">
+            <span>Cargo</span>
+            <i class="fas fa-sort-amount-down"></i>
+          </th>
+          <th>
+            <span>Canal preferido</span>
+          </th>
+          <th class="sortable" data-field="interest">
+            <span>Interés</span>
+            <i class="fas fa-sort-amount-down"></i>
+          </th>
+          <th>
+            <span>Acciones</span>
+          </th>
+        </tr>
+      </thead>
     `;
   },
   renderOption: (item) => {
