@@ -14,9 +14,9 @@ const companyQuery = {
     'address',
     'email',
     'phone',
-    [sequelize.col('City.name'), 'city'],
-    [sequelize.col('City.Country.name'), 'country'],
-    [sequelize.col('City.Country.Region.name'), 'region'],
+    [sequelize.col('city.name'), 'city'],
+    [sequelize.col('city.country.name'), 'country'],
+    [sequelize.col('city.country.region.name'), 'region'],
   ],
   include: [
     {

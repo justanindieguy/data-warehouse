@@ -3,7 +3,7 @@ const sequelize = require('../database/database');
 const Country = require('./Country');
 
 const Region = sequelize.define(
-  'Region',
+  'region',
   {
     id: {
       type: DataTypes.INTEGER,

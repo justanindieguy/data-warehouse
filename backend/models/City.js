@@ -4,7 +4,7 @@ const Company = require('./Company');
 const Contact = require('./Contact');
 
 const City = sequelize.define(
-  'City',
+  'city',
   {
     id: {
       type: DataTypes.INTEGER,

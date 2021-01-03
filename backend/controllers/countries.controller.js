@@ -6,7 +6,7 @@ const Country = require('../models/Country');
 const Region = require('../models/Region');
 
 const countryQuery = {
-  attributes: ['id', 'name', [sequelize.col('Region.name'), 'region']],
+  attributes: ['id', 'name', [sequelize.col('region.name'), 'region']],
   include: [
     {
       model: Region,

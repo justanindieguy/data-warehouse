@@ -3,7 +3,7 @@ const sequelize = require('../database/database');
 const Contact = require('./Contact');
 
 const Company = sequelize.define(
-  'Company',
+  'company',
   {
     id: {
       type: DataTypes.INTEGER,

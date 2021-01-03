@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../database/database');
 
 const Account = sequelize.define(
-  'Account',
+  'account',
   {
     channelId: {
       type: DataTypes.INTEGER,

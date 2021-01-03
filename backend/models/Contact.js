@@ -3,7 +3,7 @@ const sequelize = require('../database/database');
 const Account = require('./Account');
 
 const Contact = sequelize.define(
-  'Contact',
+  'contact',
   {
     id: {
       type: DataTypes.INTEGER,

@@ -16,10 +16,10 @@ const contactQuery = {
     'name',
     'lastName',
     'email',
-    [sequelize.col('Company.name'), 'company'],
-    [sequelize.col('City.name'), 'city'],
-    [sequelize.col('City.Country.name'), 'country'],
-    [sequelize.col('City.Country.Region.name'), 'region'],
+    [sequelize.col('company.name'), 'company'],
+    [sequelize.col('city.name'), 'city'],
+    [sequelize.col('city.country.name'), 'country'],
+    [sequelize.col('city.country.region.name'), 'region'],
     'position',
     'interest',
   ],
@@ -56,7 +56,7 @@ const accountQuery = {
     'channelId',
     'contactId',
     'accountValue',
-    [sequelize.col('Channel.name'), 'channelName'],
+    [sequelize.col('channel.name'), 'channelName'],
   ],
   include: [
     {

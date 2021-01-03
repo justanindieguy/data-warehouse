@@ -15,13 +15,13 @@ const userQuery = {
     [
       sequelize.fn(
         'CONCAT',
-        sequelize.col('User.name'),
+        sequelize.col('user.name'),
         ' ',
-        sequelize.col('User.lastName')
+        sequelize.col('user.lastName')
       ),
       'name',
     ],
-    [sequelize.col('Role.name'), 'loggedInAs'],
+    [sequelize.col('role.name'), 'loggedInAs'],
     'email',
   ],
   include: [
@@ -59,7 +59,7 @@ async function getOneUser(req, res) {
         'name',
         'lastNameOne',
         'lastNameTwo',
-        [sequelize.col('Role.name'), 'loggedInAs'],
+        [sequelize.col('role.name'), 'loggedInAs'],
         'email',
       ],
       where: { id },
@@ -165,7 +165,7 @@ async function login(req, res) {
         'id',
         'email',
         'password',
-        [sequelize.col('Role.name'), 'loggedInAs'],
+        [sequelize.col('role.name'), 'loggedInAs'],
       ],
       where: { email },
     });

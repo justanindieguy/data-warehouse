@@ -3,7 +3,7 @@ const sequelize = require('../database/database');
 const Account = require('./Account');
 
 const Channel = sequelize.define(
-  'Channel',
+  'channel',
   {
     id: {
       type: DataTypes.INTEGER,
