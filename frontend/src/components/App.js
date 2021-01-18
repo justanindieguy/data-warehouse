@@ -1,8 +1,14 @@
 import React from 'react';
-import './App.scss';
+import Navbar from './Navbar';
+import ContactsPage from './ContactsPage';
 
 const App = () => {
-  return <div>Data Warehouse</div>;
+  return (
+    <React.Fragment>
+      <Navbar />
+      <ContactsPage />
+    </React.Fragment>
+  );
 };
 
 export default App;

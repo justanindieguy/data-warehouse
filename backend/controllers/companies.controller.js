@@ -1,45 +1,8 @@
 const Sequelize = require('sequelize');
 
 const { SERVER_ERROR_MSG } = require('../utils/constants');
-const sequelize = require('../database/database');
 const Company = require('../models/Company');
-const City = require('../models/City');
-const Country = require('../models/Country');
-const Region = require('../models/Region');
-
-const companyQuery = {
-  attributes: [
-    'id',
-    'name',
-    'address',
-    'email',
-    'phone',
-    [sequelize.col('city.name'), 'city'],
-    [sequelize.col('city.country.name'), 'country'],
-    [sequelize.col('city.country.region.name'), 'region'],
-  ],
-  include: [
-    {
-      model: City,
-      required: true,
-      attributes: [],
-      include: [
-        {
-          model: Country,
-          required: true,
-          attributes: [],
-          include: [
-            {
-              model: Region,
-              required: true,
-              attributes: [],
-            },
-          ],
-        },
-      ],
-    },
-  ],
-};
+const companyQuery = require('../queries/company');
 
 async function getCompanies(req, res) {
   try {
@@ -74,21 +37,13 @@ async function getOneCompany(req, res) {
 }
 
 async function addCompany(req, res) {
-  const { name, address, email, phone, cityId } = req.body;
-
   try {
-    const newProject = await Company.create({
-      name,
-      address,
-      email,
-      phone,
-      cityId,
-    });
+    const newCompany = await Company.create(req.reqCompany);
 
-    if (newProject) {
+    if (newCompany) {
       return res
-        .status(200)
-        .json({ message: 'Company created successfully.', data: newProject });
+        .status(201)
+        .json({ message: 'Company created successfully.', data: newCompany });
     }
   } catch (err) {
     console.error(err);
@@ -103,13 +58,12 @@ async function addCompany(req, res) {
 
 async function updateCompany(req, res) {
   const { id } = req.params;
-  const { name, address, email, phone, cityId } = req.body;
 
   try {
     const company = await Company.findOne({ where: { id } });
 
     if (company) {
-      await company.update({ name, address, email, phone, cityId });
+      await company.update(req.reqCompany);
     } else {
       return res.status(404).json({ message: `Company not found` });
     }

@@ -3,35 +3,11 @@ const bcrypt = require('bcryptjs');
 const Sequelize = require('sequelize');
 
 const sequelize = require('../database/database');
-const User = require('../models/User');
-const Role = require('../models/Role');
 const { SERVER_ERROR_MSG } = require('../utils/constants');
+const User = require('../models/User');
+const userQuery = require('../queries/user');
 
 const { TOKEN_SECRET } = process.env;
-
-const userQuery = {
-  attributes: [
-    'id',
-    [
-      sequelize.fn(
-        'CONCAT',
-        sequelize.col('user.name'),
-        ' ',
-        sequelize.col('user.lastName')
-      ),
-      'name',
-    ],
-    [sequelize.col('role.name'), 'loggedInAs'],
-    'email',
-  ],
-  include: [
-    {
-      model: Role,
-      require: true,
-      attributes: [],
-    },
-  ],
-};
 
 async function getUsers(req, res) {
   try {
@@ -78,22 +54,16 @@ async function getOneUser(req, res) {
 
 async function registerUser(req, res) {
   let { password } = req.body;
-  const { name, lastName, email } = req.body;
 
   try {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     password = hashedPassword;
 
-    const newUser = await User.create({
-      name,
-      lastName,
-      email,
-      password,
-    });
+    const newUser = await User.create({ ...req.reqUser, ...password });
 
     if (newUser) {
-      return res.status(200).json({
+      return res.status(201).json({
         message: 'User created successfully.',
         data: {
           id: newUser.id,
@@ -104,14 +74,13 @@ async function registerUser(req, res) {
     }
   } catch (err) {
     console.error(err);
-
     return res.status(500).json({ message: SERVER_ERROR_MSG });
   }
 }
 
 async function updateUser(req, res) {
   const { id } = req.params;
-  const { name, lastName, roleId, email } = req.body;
+  const { roleId } = req.body;
   let { password } = req.body;
 
   try {
@@ -124,13 +93,7 @@ async function updateUser(req, res) {
         password = hashedPassword;
       }
 
-      await user.update({
-        name,
-        lastName,
-        roleId,
-        email,
-        password,
-      });
+      await user.update({ ...req.reqUser, ...roleId, ...password });
     } else {
       return res.status(404).json({ message: 'User not found.' });
     }

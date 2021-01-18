@@ -6,7 +6,8 @@
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
-    "node-sass": "^4.14.1",
+    "axios": "^0.21.1",
+    "lodash": "^4.17.20",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
@@ -20,7 +21,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "css-build": "node-sass --omit-source-map-url sass/mystyles.scss public/bulma.css",
+    "css-watch": "npm run css-build -- --watch"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +42,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "bulma": "^0.9.1",
+    "node-sass": "^4.14.1"
   }
 }

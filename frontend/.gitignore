@@ -10,8 +10,10 @@
 
 # production
 /build
+/public/bulma.css
 
 # misc
+package-lock.json
 .DS_Store
 .eslintcache
 .env.local

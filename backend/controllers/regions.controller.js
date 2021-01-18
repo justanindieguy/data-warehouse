@@ -36,14 +36,12 @@ async function getOneRegion(req, res) {
 }
 
 async function addRegion(req, res) {
-  const { name } = req.body;
-
   try {
-    const newRegion = await Region.create({ name });
+    const newRegion = await Region.create(req.reqRegion);
 
     if (newRegion) {
       return res
-        .status(200)
+        .status(201)
         .json({ message: 'Region created successfully.', data: newRegion });
     }
   } catch (err) {
@@ -54,13 +52,12 @@ async function addRegion(req, res) {
 
 async function updateRegion(req, res) {
   const { id } = req.params;
-  const { name } = req.body;
 
   try {
     const region = await Region.findOne({ where: { id } });
 
     if (region) {
-      await region.update({ name });
+      await region.update(req.reqRegion);
     } else {
       return res.status(404).json({ message: 'Region not found.' });
     }

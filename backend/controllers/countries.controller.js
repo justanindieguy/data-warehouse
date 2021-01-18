@@ -1,20 +1,8 @@
 const Sequelize = require('sequelize');
 
 const { SERVER_ERROR_MSG } = require('../utils/constants');
-const sequelize = require('../database/database');
 const Country = require('../models/Country');
-const Region = require('../models/Region');
-
-const countryQuery = {
-  attributes: ['id', 'name', [sequelize.col('region.name'), 'region']],
-  include: [
-    {
-      model: Region,
-      required: true,
-      attributes: [],
-    },
-  ],
-};
+const countryQuery = require('../queries/country');
 
 async function getCountries(req, res) {
   try {
@@ -49,14 +37,12 @@ async function getOneCountry(req, res) {
 }
 
 async function addCountry(req, res) {
-  const { name, regionId } = req.body;
-
   try {
-    const newCountry = await Country.create({ name, regionId });
+    const newCountry = await Country.create(req.reqCountry);
 
     if (newCountry) {
       return res
-        .status(200)
+        .status(201)
         .json({ message: 'Country created successfully.', data: newCountry });
     }
   } catch (err) {
@@ -72,13 +58,12 @@ async function addCountry(req, res) {
 
 async function updateCountry(req, res) {
   const { id } = req.params;
-  const { name, regionId } = req.body;
 
   try {
     const country = await Country.findOne({ where: { id } });
 
     if (country) {
-      await country.update({ name, regionId });
+      await country.update(req.reqCountry);
     } else {
       return res.status(404).json({ message: 'Country not found.' });
     }

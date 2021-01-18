@@ -1,0 +1,22 @@
+.users-table {
+  border: 1px solid #dbdbdb;
+  width: 100%;
+
+  th {
+    vertical-align: middle;
+  }
+}
+
+.users-table thead {
+  border: 1px solid #dbdbdb;
+
+  th {
+    padding: 30px 0 20px 0;
+  }
+}
+
+.users-table tbody {
+  tr {
+    height: 60px;
+  }
+}
