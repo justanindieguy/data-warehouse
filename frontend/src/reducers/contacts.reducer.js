@@ -1,14 +1,9 @@
 import { FETCH_CONTACTS } from '../actions/types';
 
-const INITIAL_STATE = {
-  total: 0,
-  items: [],
-};
-
-const contactsReducer = (state = INITIAL_STATE, action) => {
+const contactsReducer = (state = [], action) => {
   switch (action.type) {
     case FETCH_CONTACTS:
-      return { ...state, ...action.payload };
+      return [...action.payload.items];
     default:
       return state;
   }

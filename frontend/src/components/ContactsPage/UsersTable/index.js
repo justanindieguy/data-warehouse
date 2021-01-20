@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ColumnWidth from './ColumnWidth';
 import TableColumn from './TableColumn';
 import TableRow from './TableRow';
-import { fetchContacts } from '../../../actions';
+import { fetchContactsAndAccounts } from '../../../actions';
 import './styles.scss';
 
 const labels = [
@@ -19,7 +19,7 @@ const labels = [
 
 class UsersTable extends Component {
   componentDidMount() {
-    this.props.fetchContacts();
+    this.props.fetchContactsAndAccounts();
   }
 
   renderColumns = () => {
@@ -37,7 +37,7 @@ class UsersTable extends Component {
   };
 
   render() {
-    if (this.props.contacts.length === 0) {
+    if (this.props.contacts.length === 0 || !this.props.accounts) {
       return <div>Loading ...</div>;
     }
 
@@ -56,7 +56,9 @@ class UsersTable extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { contacts: state.contacts.items };
+  return { contacts: state.contacts, accounts: state.accounts };
 };
 
-export default connect(mapStateToProps, { fetchContacts })(UsersTable);
+export default connect(mapStateToProps, { fetchContactsAndAccounts })(
+  UsersTable
+);

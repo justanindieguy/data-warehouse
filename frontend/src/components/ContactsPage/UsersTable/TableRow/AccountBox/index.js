@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 const AccountBox = ({ accounts }) => {
   const classes =
@@ -6,7 +7,7 @@ const AccountBox = ({ accounts }) => {
 
   let accountsToShow;
   let renderedAccounts;
-  if (accounts.length > 1) {
+  if (accounts && accounts.length >= 1) {
     accountsToShow = accounts.slice(0, 2);
     renderedAccounts = accountsToShow.map((account) => {
       return (
@@ -30,11 +31,7 @@ const AccountBox = ({ accounts }) => {
   }
 
   const getAccounts = () => {
-    if (accounts.length === 1) {
-      return <div className={classes}>{accounts[0].channelName}</div>;
-    }
-
-    if (accounts.length === 2) {
+    if (accounts.length >= 1 && accounts.length <= 2) {
       return renderedAccounts;
     }
 
@@ -48,7 +45,17 @@ const AccountBox = ({ accounts }) => {
     }
   };
 
+  if (!accounts) {
+    return null;
+  }
+
   return <div className="is-flex is-align-items-center">{getAccounts()}</div>;
 };
 
-export default AccountBox;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    accounts: state.accounts[ownProps.contactId],
+  };
+};
+
+export default connect(mapStateToProps)(AccountBox);

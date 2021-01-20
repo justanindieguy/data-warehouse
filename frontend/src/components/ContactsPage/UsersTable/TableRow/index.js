@@ -2,8 +2,6 @@ import React from 'react';
 import AccountBox from './AccountBox';
 import ProgressBar from './ProgressBar';
 
-const accounts = [];
-
 const TableRow = ({ contact }) => {
   return (
     <tr>
@@ -48,7 +46,7 @@ const TableRow = ({ contact }) => {
         </div>
       </th>
       <th>
-        <AccountBox accounts={accounts} />
+        <AccountBox contactId={contact.id} />
       </th>
       <th>
         <ProgressBar value={contact.interest} />
