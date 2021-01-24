@@ -3,7 +3,7 @@ import useOutsideClickListener from '../../hooks/useOutsideClickListener';
 import DropdownItem from './DropdownItem';
 import './styles.scss';
 
-const Dropdown = ({ items }) => {
+const Dropdown = ({ items, onSelectDropdownItem }) => {
   const [opened, setOpened] = useState(false);
   const [activeIdx, setActiveIdx] = useState(0);
   const dropdownBox = useRef(null);
@@ -11,7 +11,14 @@ const Dropdown = ({ items }) => {
   useOutsideClickListener(dropdownBox, () => setOpened(false));
 
   const renderedItems = items.map((item, idx) => {
-    const props = { item, idx, activeIdx, setActiveIdx };
+    item.idx = idx;
+
+    const props = {
+      item,
+      activeIdx,
+      setActiveIdx,
+      onClick: onSelectDropdownItem,
+    };
 
     return <DropdownItem {...props} key={item.label} />;
   });

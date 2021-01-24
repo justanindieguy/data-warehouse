@@ -1,0 +1,9 @@
+$orange: #ff6f00;
+
+.progress.is-orange::-webkit-progress-value {
+  background-color: $orange;
+}
+
+.progress.is-orange::-moz-progress-bar {
+  background-color: $orange;
+}

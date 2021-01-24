@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TableColumn = ({ label }) => {
+const TableColumn = ({ label, onClick }) => {
   if (label.type === 'input') {
     return (
       <th className="has-text-centered">
@@ -11,7 +11,10 @@ const TableColumn = ({ label }) => {
 
   if (label.type === 'text' && label.sortable) {
     return (
-      <th className="is-clickable is-unselectable">
+      <th
+        className="is-clickable is-unselectable"
+        onClick={() => onClick(label.sortBy)}
+      >
         <span className="title is-size-6">{label.content}</span>
         <i className="fas fa-sort ml-2" />
       </th>
