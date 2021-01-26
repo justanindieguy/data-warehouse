@@ -135,18 +135,24 @@ async function login(req, res) {
 
     // Checking if a user with the provided email exists.
     if (!user) {
-      return res
-        .status(401)
-        .json({ message: 'The email or password is incorrect.' });
+      return res.status(401).json({
+        message: {
+          email: 'Error o contraseña incorrectos.',
+          password: 'Error o contraseña incorrectos.',
+        },
+      });
     }
 
     // Checking if the password is correct.
     const validPassword = await bcrypt.compare(password, user.password);
 
     if (!validPassword) {
-      return res
-        .status(401)
-        .json({ message: 'The email or password is incorrect.' });
+      return res.status(401).json({
+        errors: {
+          email: 'Error o contraseña incorrectos.',
+          password: 'Error o contraseña incorrectos.',
+        },
+      });
     }
 
     // Create and assign a token.

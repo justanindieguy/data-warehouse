@@ -72,6 +72,6 @@ router.delete(
   deleteEntity(User, 'User')
 );
 
-router.post('/login', [requireValidEmail], handleErrors, controller.login);
+router.post('/login', handleErrors, controller.login);
 
 module.exports = router;
