@@ -20,14 +20,15 @@ const PasswordInput = ({ label, input, meta }) => {
           )}
         </div>
         <div className="control">
-          <div className="button">
-            <span
-              className="icon is-small is-right is-clickable"
-              onClick={() => setIsVisible(!isVisible)}
-            >
+          <button
+            className="button"
+            type="button"
+            onClick={() => setIsVisible(!isVisible)}
+          >
+            <span className="icon is-small is-right is-clickable">
               <i className={`fas ${getIconClass()}`} />
             </span>
-          </div>
+          </button>
         </div>
       </div>
     </React.Fragment>

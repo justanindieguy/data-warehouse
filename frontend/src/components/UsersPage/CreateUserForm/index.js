@@ -21,7 +21,7 @@ const CreateUserForm = () => {
 
   return (
     <Form onSubmit={(formObj) => console.log(formObj)}>
-      {({ handleSubmit, submitting, pristine, form, values }) => (
+      {({ handleSubmit, submitting, pristine, form, values, invalid }) => (
         <form onSubmit={handleSubmit}>
           <Field name="name" validate={required}>
             {(props) =>
@@ -76,8 +76,8 @@ const CreateUserForm = () => {
             <div className="control">
               <button
                 className="button is-link"
+                disabled={invalid || submitting}
                 type="submit"
-                disabled={submitting}
               >
                 Enviar
               </button>
@@ -87,6 +87,7 @@ const CreateUserForm = () => {
                 className="button is-link is-light"
                 onClick={form.reset}
                 disabled={submitting || pristine}
+                type="button"
               >
                 Limpiar campos
               </button>
