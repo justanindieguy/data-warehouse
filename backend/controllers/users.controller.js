@@ -53,14 +53,12 @@ async function getOneUser(req, res) {
 }
 
 async function registerUser(req, res) {
-  let { password } = req.body;
-
   try {
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    password = hashedPassword;
+    const hashedPassword = await bcrypt.hash(req.reqUser.password, salt);
+    req.reqUser.password = hashedPassword;
 
-    const newUser = await User.create({ ...req.reqUser, ...password });
+    const newUser = await User.create(req.reqUser);
 
     if (newUser) {
       return res.status(201).json({

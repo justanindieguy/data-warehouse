@@ -24,6 +24,7 @@ module.exports = {
       }
 
       if (emailExists) {
+        req.statusCode = 409;
         throw new Error('Ya existe un usuario con el email proporcionado.');
       }
 
@@ -51,6 +52,7 @@ module.exports = {
       const { password } = req.body;
 
       if (passwordConfirm !== password) {
+        req.statusCode = 403;
         throw new Error('Las contraseñas debes coincidir.');
       }
 

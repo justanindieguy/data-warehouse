@@ -24,8 +24,8 @@ const router = express.Router();
 
 // ***** HELPER FUNCTION ******
 function parseBody(req, res, next) {
-  const { name, lastName, email } = req.body;
-  req.reqUser = { name, lastName, email };
+  const { name, lastName, email, password } = req.body;
+  req.reqUser = { name, lastName, email, password };
   next();
 }
 

@@ -4,9 +4,10 @@ const { SERVER_ERROR_MSG } = require('../utils/constants');
 module.exports = {
   handleErrors(req, res, next) {
     const errors = validationResult(req);
+    const statusCode = req.statusCode || 400;
 
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.mapped() });
+      return res.status(statusCode).json({ errors: errors.mapped() });
     }
 
     next();

@@ -2,35 +2,37 @@ import React from 'react';
 
 const FormField = (props) => {
   const { input, meta } = props;
+  const { label, iconLeft, iconRight, type, placeholder, required } = props;
+  const { error, submitError, dirtySinceLastSubmit, touched } = meta;
 
   return (
     <div className="field">
-      <label className="label">{props.label}</label>
+      <label className="label">{label}</label>
       <div
-        className={`control ${props.iconLeft && 'has-icons-left'} ${
-          props.iconRight && 'has-icons-right'
+        className={`control ${iconLeft && 'has-icons-left'} ${
+          iconRight && 'has-icons-right'
         }`}
       >
         <input
-          type={!props.type ? 'text' : props.type}
+          type={!type ? 'text' : type}
           className="input"
-          placeholder={props.placeholder}
-          required={props.required}
+          placeholder={placeholder}
+          required={required}
           {...input}
         />
-        {props.iconLeft && (
+        {iconLeft && (
           <span className="icon is-small is-left">
-            <i className={`fas ${props.iconLeft}`} />
+            <i className={`fas ${iconLeft}`} />
           </span>
         )}
-        {props.iconRight && (
+        {iconRight && (
           <span className="icon is-small is-right">
-            <i className={`fas ${props.iconRight}`} />
+            <i className={`fas ${iconRight}`} />
           </span>
         )}
       </div>
-      {meta && meta.error && meta.touched && (
-        <p className="help is-danger">{meta.error}</p>
+      {(error || (submitError && !dirtySinceLastSubmit)) && touched && (
+        <p className="help is-danger">{error || submitError}</p>
       )}
     </div>
   );

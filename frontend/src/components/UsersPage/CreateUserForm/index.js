@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Field } from 'react-final-form';
+import { Form } from 'react-final-form';
+import FinalFormInput from '../../shared/FinalFormInput';
 import FormInput from '../../shared/FormInput';
 import PasswordInput from '../../shared/PasswordInput';
 import {
@@ -7,94 +8,77 @@ import {
   requireValidEmail,
   requireValidPassword,
   passwordsMustMatch,
-  composeValidators,
 } from '../../../validations';
+import { registerUser } from '../../../actions/registerUser';
 
 const CreateUserForm = () => {
-  const renderInput = (props, reactFormProps) => {
-    return <FormInput {...props} {...reactFormProps} />;
-  };
-
-  const renderPasswordInput = (props, reactFormProps) => {
-    return <PasswordInput {...props} {...reactFormProps} />;
-  };
-
   return (
-    <Form onSubmit={(formObj) => console.log(formObj)}>
-      {({ handleSubmit, submitting, pristine, form, values, invalid }) => (
-        <form onSubmit={handleSubmit}>
-          <Field name="name" validate={required}>
-            {(props) =>
-              renderInput({ required: true, label: 'Nombre' }, props)
-            }
-          </Field>
+    <Form onSubmit={registerUser}>
+      {(props) => {
+        return (
+          <form onSubmit={props.handleSubmit}>
+            <FinalFormInput name="name" validators={[required]}>
+              <FormInput required={true} label="Nombre" />
+            </FinalFormInput>
 
-          <Field name="lastName" validate={required}>
-            {(props) =>
-              renderInput({ required: true, label: 'Apellido' }, props)
-            }
-          </Field>
+            <FinalFormInput name="lastName" validators={[required]}>
+              <FormInput required={true} label="Apellido" />
+            </FinalFormInput>
 
-          <Field
-            name="email"
-            validate={composeValidators(required, requireValidEmail)}
-          >
-            {(props) =>
-              renderInput(
-                {
-                  required: true,
-                  label: 'Email',
-                  type: 'email',
-                  placeholder: 'user@email.com',
-                  iconLeft: 'fa-envelope',
-                },
-                props
-              )
-            }
-          </Field>
+            <FinalFormInput
+              name="email"
+              validators={[required, requireValidEmail]}
+            >
+              <FormInput
+                required={true}
+                label="Email"
+                type="email"
+                placeholder="user@email.com"
+                iconLeft="fa-envelope"
+              />
+            </FinalFormInput>
 
-          <Field
-            name="password"
-            validate={composeValidators(required, requireValidPassword)}
-          >
-            {(props) => renderPasswordInput({ label: 'Contraseña' }, props)}
-          </Field>
+            <FinalFormInput
+              name="password"
+              validators={[required, requireValidPassword]}
+            >
+              <PasswordInput label="Contraseña" />
+            </FinalFormInput>
 
-          <Field
-            name="passwordConfirm"
-            validate={composeValidators(
-              required,
-              passwordsMustMatch(values.password)
-            )}
-          >
-            {(props) =>
-              renderPasswordInput({ label: 'Confirmar contraseña' }, props)
-            }
-          </Field>
+            <FinalFormInput
+              name="passwordConfirm"
+              validators={[required, passwordsMustMatch(props.values.password)]}
+            >
+              <PasswordInput label="Confirmar contraseña" />
+            </FinalFormInput>
 
-          <div className="field is-grouped">
-            <div className="control">
-              <button
-                className="button is-link"
-                disabled={invalid || submitting}
-                type="submit"
-              >
-                Enviar
-              </button>
+            <div className="field is-grouped">
+              <div className="control">
+                <button
+                  className="button is-link"
+                  disabled={
+                    props.hasValidationErrors ||
+                    (props.hasSubmitErrors && !props.dirtySinceLastSubmit)
+                  }
+                  type="submit"
+                >
+                  Enviar
+                </button>
+              </div>
+              <div className="control">
+                <button
+                  className="button is-link is-light"
+                  onClick={props.form.reset}
+                  disabled={props.submitting || props.pristine}
+                  type="button"
+                >
+                  Limpiar campos
+                </button>
+              </div>
             </div>
-            <div className="control">
-              <button
-                className="button is-link is-light"
-                onClick={form.reset}
-                disabled={submitting || pristine}
-                type="button"
-              >
-                Limpiar campos
-              </button>
-            </div>
-          </div>
-        </form>
-      )}
+          </form>
+        );
+      }}
     </Form>
   );
 };
