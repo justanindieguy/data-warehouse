@@ -7,3 +7,4 @@ export const SET_OFFSET = 'SET_OFFSET';
 export const TOGGLE_MODAL_OPEN = 'TOGGLE_MODAL_OPEN';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const OPEN_MODAL = 'OPEN_MODAL';
+export const UPDATE_NEW_USER = 'UPDATE_NEW_USER';

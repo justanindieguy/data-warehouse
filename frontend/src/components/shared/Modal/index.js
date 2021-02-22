@@ -1,31 +1,35 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import { closeModal } from '../../../actions';
+import useOutsideClickListener from '../../hooks/useOutsideClickListener';
 import './styles.scss';
 
-const Modal = ({ opened }) => {
-  console.log(opened);
+const Modal = ({ title, content, footer, opened, closeModal }) => {
+  const modalCard = useRef(null);
+
+  useOutsideClickListener(modalCard, () => closeModal());
 
   const renderModal = () => {
     if (opened) {
       return (
         <div className="modal">
           <div className="modal-background"></div>
-          <div className="modal-card" onClick={(evt) => evt.stopPropagation()}>
+          <div
+            className="modal-card"
+            onClick={(evt) => evt.stopPropagation()}
+            ref={modalCard}
+          >
             <header className="modal-card-head">
-              <p className="modal-card-title">Modal Title</p>
-              <button className="delete" aria-label="close"></button>
+              <p className="modal-card-title">{title}</p>
+              <button
+                className="delete"
+                aria-label="close"
+                onClick={closeModal}
+              ></button>
             </header>
-            <section className="modal-card-body">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos eum
-              quidem repellat quaerat beatae, quasi molestiae unde amet dicta
-              magnam explicabo ullam officiis facere sunt nemo quas impedit
-              minus ducimus!
-            </section>
-            <footer className="modal-card-foot">
-              <button className="button is-success">Ok</button>
-            </footer>
+            <section className="modal-card-body">{content}</section>
+            <footer className="modal-card-foot">{footer}</footer>
           </div>
         </div>
       );

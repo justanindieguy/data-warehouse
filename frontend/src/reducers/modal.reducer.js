@@ -1,6 +1,6 @@
 import { TOGGLE_MODAL_OPEN, CLOSE_MODAL, OPEN_MODAL } from '../actions/types';
 
-const modalReducer = (state = true, action) => {
+const modalReducer = (state = false, action) => {
   switch (action.type) {
     case TOGGLE_MODAL_OPEN:
       return !state;
