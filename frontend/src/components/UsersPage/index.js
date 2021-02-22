@@ -1,5 +1,6 @@
 import React from 'react';
 import Form from './CreateUserForm';
+import Modal from '../shared/Modal';
 
 const UsersPage = () => {
   return (
@@ -9,6 +10,8 @@ const UsersPage = () => {
           Crear usuario
         </h1>
         <Form />
+        <button className="button">Open Modal</button>
+        <Modal />
       </div>
     </div>
   );
