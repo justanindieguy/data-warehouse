@@ -1,0 +1,18 @@
+ul.tree-container {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0;
+}
+
+div.tree-node {
+  padding: 0.75rem 1.25rem;
+}
+
+div.tree-label {
+  margin-bottom: 15px;
+}
+
+div.node-buttons {
+  position: absolute;
+  left: 200px;
+}

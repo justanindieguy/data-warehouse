@@ -1,9 +1,19 @@
 const { SERVER_ERROR_MSG } = require('../utils/constants');
+
+const sequelize = require('../database/database');
 const Region = require('../models/Region');
+const regionQuery = require('../queries/region');
 
 async function getRegions(req, res) {
+  const sortBy = 'name';
+  const ascending = req.query.ascending || 'true';
+  const sortString = ascending === 'true' ? `${sortBy} ASC` : `${sortBy} DESC`;
+
   try {
-    const regions = await Region.findAll();
+    const regions = await Region.findAll({
+      ...regionQuery,
+      order: sequelize.literal(sortString),
+    });
 
     if (regions.length === 0) {
       return res.status(404).json({ message: 'There are no regions yet.' });

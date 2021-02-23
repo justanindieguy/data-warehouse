@@ -15,7 +15,7 @@ const Header = () => {
             </button>
           </div>
         </div>
-        <div>
+        <div className="is-flex">
           <button className="button is-link is-outlined mr-2">
             <span className="icon is-small">
               <i className="fas fa-upload" />

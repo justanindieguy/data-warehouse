@@ -4,6 +4,7 @@ import history from '../history';
 import Navbar from './Navbar';
 import ContactsPage from './ContactsPage';
 import UsersPage from './UsersPage';
+import RegionsPage from './RegionsPage';
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
       <Route path="/" component={Navbar} />
       <Route path="/" exact component={ContactsPage} />
       <Route path="/users" exact component={UsersPage} />
+      <Route path="/regions" exact component={RegionsPage} />
     </Router>
   );
 };

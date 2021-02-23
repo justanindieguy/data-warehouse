@@ -5,8 +5,15 @@ const City = require('../models/City');
 const cityQuery = require('../queries/city');
 
 async function getCities(req, res) {
+  const { countryId } = req.query;
+  let cities;
+
   try {
-    const cities = await City.findAll(cityQuery);
+    if (!countryId) {
+      cities = await City.findAll(cityQuery);
+    } else {
+      cities = await City.findAll({ ...cityQuery, where: { countryId } });
+    }
 
     if (cities.length === 0) {
       return res.status(404).json({ message: 'There are no cities yet.' });

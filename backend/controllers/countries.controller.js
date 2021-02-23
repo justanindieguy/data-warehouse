@@ -5,8 +5,18 @@ const Country = require('../models/Country');
 const countryQuery = require('../queries/country');
 
 async function getCountries(req, res) {
+  const { regionId } = req.query;
+  let countries;
+
   try {
-    const countries = await Country.findAll(countryQuery);
+    if (!regionId) {
+      countries = await Country.findAll(countryQuery);
+    } else {
+      countries = await Country.findAll({
+        ...countryQuery,
+        where: { regionId },
+      });
+    }
 
     if (countries.length === 0) {
       return res.status(404).json({ message: 'There are no countries yet.' });

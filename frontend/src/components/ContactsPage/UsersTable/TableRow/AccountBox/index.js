@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 const AccountBox = ({ accounts }) => {
   const classes =
-    'button is-small is-link is-light is-size-7 has-text-weight-normal';
+    'button is-small is-link is-light is-size-7 has-text-weight-normal ml-0 mr-1';
 
   let accountsToShow;
   let renderedAccounts;
@@ -12,7 +12,7 @@ const AccountBox = ({ accounts }) => {
     renderedAccounts = accountsToShow.map((account) => {
       return (
         <div
-          className={`${classes} mr-1`}
+          className={`${classes}`}
           key={`${account.contactId}-${account.channelId}-${account.accountValue}`}
         >
           {account.channelName}
@@ -23,7 +23,7 @@ const AccountBox = ({ accounts }) => {
     accountsToShow = Array(2).fill({ channelName: 'Pending' });
     renderedAccounts = accountsToShow.map((account, idx) => {
       return (
-        <div className={`${classes} mr-1`} key={idx}>
+        <div className={`${classes}`} key={idx}>
           {account.channelName}
         </div>
       );
