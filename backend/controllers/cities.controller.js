@@ -48,12 +48,14 @@ async function addCity(req, res) {
     const newCity = await City.create(req.reqCity);
 
     if (newCity) {
-      return res
-        .status(201)
-        .json({
-          message: 'City created successfully.',
-          data: { ...newCity.dataValues, type: 'city' },
-        });
+      return res.status(201).json({
+        message: 'City created successfully.',
+        data: {
+          ...newCity.dataValues,
+          type: 'city',
+          countryId: parseInt(newCity.dataValues.countryId, 10),
+        },
+      });
     }
   } catch (err) {
     console.error(err);
