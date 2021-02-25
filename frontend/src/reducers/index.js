@@ -7,6 +7,7 @@ import newUserReducer from './newUser.reducer';
 import regionsReducer from './regions.reducer';
 import countriesReducer from './countries.reducer';
 import citiesReducer from './cities.reducer';
+import placesReducer from './places.reducer';
 
 export default combineReducers({
   accounts: accountsReducer,
@@ -14,7 +15,8 @@ export default combineReducers({
   contactsQuery: contactsQueryReducer,
   modal: modalReducer,
   newUser: newUserReducer,
-  regions: regionsReducer,
-  countries: countriesReducer,
-  cities: citiesReducer,
+  fetchedRegions: regionsReducer,
+  fetchedCountries: countriesReducer,
+  fetchedCities: citiesReducer,
+  places: placesReducer,
 });

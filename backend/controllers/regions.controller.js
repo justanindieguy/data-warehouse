@@ -50,9 +50,10 @@ async function addRegion(req, res) {
     const newRegion = await Region.create(req.reqRegion);
 
     if (newRegion) {
-      return res
-        .status(201)
-        .json({ message: 'Region created successfully.', data: newRegion });
+      return res.status(201).json({
+        message: 'Region created successfully.',
+        data: { ...newRegion.dataValues, type: 'region' },
+      });
     }
   } catch (err) {
     console.error(err);

@@ -15,13 +15,13 @@ const Navbar = () => {
           <Link to="/" className="navbar-item">
             Contactos
           </Link>
-          <Link to="./companies" className="navbar-item">
+          <Link to="/companies" className="navbar-item">
             Compañías
           </Link>
-          <Link to="./users" className="navbar-item">
+          <Link to="/users" className="navbar-item">
             Usuarios
           </Link>
-          <Link to="./regions" className="navbar-item">
+          <Link to="/regions" className="navbar-item">
             Región / Ciudad
           </Link>
         </div>

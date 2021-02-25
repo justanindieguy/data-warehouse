@@ -51,9 +51,14 @@ async function addCountry(req, res) {
     const newCountry = await Country.create(req.reqCountry);
 
     if (newCountry) {
-      return res
-        .status(201)
-        .json({ message: 'Country created successfully.', data: newCountry });
+      return res.status(201).json({
+        message: 'Country created successfully.',
+        data: {
+          ...newCountry.dataValues,
+          type: 'country',
+          regionId: parseInt(newCountry.dataValues.regionId, 10),
+        },
+      });
     }
   } catch (err) {
     console.error(err);

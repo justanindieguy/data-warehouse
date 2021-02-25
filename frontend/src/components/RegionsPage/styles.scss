@@ -2,7 +2,16 @@
   margin-top: 1rem;
 }
 
-.button {
+a.button {
   display: block;
+  width: fit-content;
+}
+
+.button.is-to-the-right {
   margin-left: auto;
+}
+
+.node-btn-container {
+  position: absolute;
+  left: 250px;
 }

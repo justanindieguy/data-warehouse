@@ -6,8 +6,9 @@ const cityQuery = {
   attributes: [
     'id',
     'name',
-    [Sequelize.col('country.name'), 'country'],
-    [Sequelize.col('country.region.name'), 'region'],
+    [Sequelize.col('country.id'), 'country'],
+    [Sequelize.col('country.region.id'), 'region'],
+    [Sequelize.fn('CONCAT', 'city'), 'type'],
   ],
   include: [
     {

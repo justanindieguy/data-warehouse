@@ -2,11 +2,19 @@ import React from 'react';
 
 const FormField = (props) => {
   const { input, meta } = props;
-  const { label, iconLeft, iconRight, type, placeholder, required } = props;
+  const {
+    label,
+    iconLeft,
+    iconRight,
+    type,
+    placeholder,
+    required,
+    hidden,
+  } = props;
   const { error, submitError, dirtySinceLastSubmit, touched } = meta;
 
   return (
-    <div className="field">
+    <div className="field" style={{ display: hidden ? 'none' : 'unset' }}>
       <label className="label">{label}</label>
       <div
         className={`control ${iconLeft && 'has-icons-left'} ${
@@ -14,11 +22,11 @@ const FormField = (props) => {
         }`}
       >
         <input
+          {...input}
           type={!type ? 'text' : type}
           className="input"
           placeholder={placeholder}
           required={required}
-          {...input}
         />
         {iconLeft && (
           <span className="icon is-small is-left">

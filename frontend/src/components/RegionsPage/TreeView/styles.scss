@@ -6,13 +6,9 @@ ul.tree-container {
 
 div.tree-node {
   padding: 0.75rem 1.25rem;
+  padding-right: 0;
 }
 
 div.tree-label {
   margin-bottom: 15px;
-}
-
-div.node-buttons {
-  position: absolute;
-  left: 200px;
 }

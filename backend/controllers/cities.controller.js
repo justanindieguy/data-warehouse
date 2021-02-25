@@ -50,7 +50,10 @@ async function addCity(req, res) {
     if (newCity) {
       return res
         .status(201)
-        .json({ message: 'City created successfully.', data: newCity });
+        .json({
+          message: 'City created successfully.',
+          data: { ...newCity.dataValues, type: 'city' },
+        });
     }
   } catch (err) {
     console.error(err);

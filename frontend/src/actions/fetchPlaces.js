@@ -1,50 +1,56 @@
 import _ from 'lodash';
 import api from '../apis/localApi';
-import { FETCH_REGIONS, FETCH_COUNTRIES, FETCH_CITIES } from './types';
+import {
+  FETCH_REGIONS,
+  FETCH_COUNTRIES,
+  FETCH_CITIES,
+  ALL_PLACES_FETCHED,
+} from './types';
 
 export const fetchAllPlaces = () => async (dispatch, getState) => {
   await dispatch(fetchRegions());
 
-  const uniqRegions = _.chain(getState().regions).map('id').uniq().value();
+  const uniqRegions = _.chain(getState().fetchedRegions)
+    .map('id')
+    .uniq()
+    .value();
 
   await Promise.all(
-    uniqRegions.map((regionId) => {
-      return dispatch(fetchCountries(regionId));
-    })
+    uniqRegions.map((regionId) => dispatch(fetchCountries(regionId)))
   );
 
-  const countries = getState().countries;
-  for (let regionId in countries) {
-    const regionCountries = countries[regionId];
-    const uniqCountries = _.chain(regionCountries).map('id').uniq().value();
+  const countries = getState().fetchedCountries;
 
-    await Promise.all(
-      uniqCountries.map((countryId) => {
-        return dispatch(fetchCities(countryId));
-      })
-    );
-  }
+  const uniqCountries = _.chain(countries).map('id').uniq().value();
+
+  await Promise.all(
+    uniqCountries.map((countryId) => dispatch(fetchCities(countryId)))
+  );
+
+  dispatch({
+    type: ALL_PLACES_FETCHED,
+    payload: {
+      regions: getState().fetchedRegions,
+      countries: getState().fetchedCountries,
+      cities: getState().fetchedCities,
+    },
+  });
 };
 
 export const fetchRegions = () => async (dispatch) => {
   const { data } = await api.get('/regions');
-
-  const regions = _.keyBy(data, (region) => {
-    return region.id;
-  });
-
-  dispatch({ type: FETCH_REGIONS, payload: regions });
+  dispatch({ type: FETCH_REGIONS, payload: data });
 };
 
 export const fetchCountries = (regionId) => async (dispatch) => {
-  const countries = {};
+  let countries;
 
   try {
     const { data } = await api.get('/countries', { params: { regionId } });
-    countries[regionId] = data;
+    countries = data;
   } catch (err) {
     if (err.response.status === 404) {
-      countries[regionId] = [];
+      countries = [];
     }
   }
 
@@ -52,15 +58,13 @@ export const fetchCountries = (regionId) => async (dispatch) => {
 };
 
 export const fetchCities = (countryId) => async (dispatch) => {
-  const cities = {};
+  let cities;
 
   try {
     const { data } = await api.get('/cities', { params: { countryId } });
-    cities[countryId] = data;
+    cities = data;
   } catch (err) {
-    if (err.response.status === 404) {
-      cities[countryId] = [];
-    }
+    cities = [];
   }
 
   dispatch({ type: FETCH_CITIES, payload: cities });

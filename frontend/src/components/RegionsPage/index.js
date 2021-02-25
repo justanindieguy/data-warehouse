@@ -1,75 +1,44 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { fetchAllPlaces } from '../../actions';
-import TreeView from '../shared/TreeView';
+import TreeView from './TreeView';
 import './styles.scss';
 
 class RegionsPage extends Component {
-  state = { parsedPlaces: [] };
-
-  async componentDidMount() {
-    await this.props.fetchAllPlaces();
-    this.parsePlaces();
-  }
-
-  parsePlaces() {
-    const { regions, countries, cities } = this.props;
-
-    if (!regions || !countries || !cities) {
-      return;
-    }
-
-    for (let regionId in countries) {
-      regions[regionId].children = countries[regionId];
-    }
-
-    const sortedRegions = _.sortBy(Object.values(regions), [
-      (region) => {
-        return region.name;
-      },
-    ]);
-
-    for (let region of sortedRegions) {
-      for (let country of region.children) {
-        if (cities[country.id]) {
-          country.children = cities[country.id];
-        }
-      }
-    }
-
-    this.setState({ parsedPlaces: sortedRegions });
+  componentDidMount() {
+    this.props.fetchAllPlaces();
   }
 
   render() {
-    if (!this.state.parsedPlaces) {
-      return <div>Loading...</div>;
-    }
-
     return (
       <div className="container is-widescreen">
         <div className="content">
-          <button className="button is-link">Agregar Región</button>
-          <TreeView data={Object.values(this.state.parsedPlaces)} />
+          <Link
+            className="button is-link is-outlined is-to-the-right"
+            to="/regions/region/add"
+          >
+            Añadir Región
+          </Link>
+          <hr />
+
+          {this.props.places === null ? (
+            <div>Loading...</div>
+          ) : (
+            <TreeView data={this.props.places} />
+          )}
         </div>
       </div>
     );
   }
 }
 
-const sortProp = (obj) => {
-  const sortedProp = {};
-
-  for (let propId in obj) {
-    sortedProp[propId] = _.sortBy(obj[propId], [(entry) => entry.name]);
-  }
-
-  return sortedProp;
-};
-
 const mapStateToProps = (state) => {
-  const { regions, countries, cities } = state;
-  return { regions, countries: sortProp(countries), cities: sortProp(cities) };
+  return {
+    places: state.places,
+  };
 };
 
-export default connect(mapStateToProps, { fetchAllPlaces })(RegionsPage);
+export default connect(mapStateToProps, {
+  fetchAllPlaces,
+})(RegionsPage);

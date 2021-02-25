@@ -45,7 +45,7 @@ const Modal = ({ title, content, footer, opened, closeModal }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { opened: state.modal };
+  return { opened: state.modal.opened };
 };
 
 export default connect(mapStateToProps, { closeModal })(Modal);
