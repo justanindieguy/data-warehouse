@@ -4,7 +4,7 @@ import FinalFormInput from '../../../shared/FinalFormInput';
 import FormInput from '../../../shared/FormInput';
 import { required } from '../../../../validations';
 
-const ModalForm = ({ onFormSubmit, formId, foreignKeyId, foreignKeyName }) => {
+const AddForm = ({ onFormSubmit, formId, foreignKeyId, foreignKeyName }) => {
   return (
     <Form onSubmit={onFormSubmit}>
       {(props) => (
@@ -12,15 +12,15 @@ const ModalForm = ({ onFormSubmit, formId, foreignKeyId, foreignKeyName }) => {
           <FinalFormInput name="name" validators={[required]}>
             <FormInput required={true} label="Nombre:" />
           </FinalFormInput>
-          {foreignKeyId && foreignKeyName ? (
-            <FinalFormInput name={foreignKeyName} value={foreignKeyId}>
+          {foreignKeyId && foreignKeyName && (
+            <FinalFormInput name={foreignKeyName} defaultValue={foreignKeyId}>
               <FormInput type="number" hidden={true} />
             </FinalFormInput>
-          ) : null}
+          )}
         </form>
       )}
     </Form>
   );
 };
 
-export default ModalForm;
+export default AddForm;

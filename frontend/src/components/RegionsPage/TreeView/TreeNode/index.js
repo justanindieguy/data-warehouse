@@ -22,7 +22,7 @@ const TreeNode = ({ node }) => {
       case 'country':
         return (
           <React.Fragment>
-            <EditButtons />
+            <EditButtons nodeType={node.type} nodeId={node.id} />
             <Link
               className="button is-link is-outlined is-to-the-right"
               to={`/regions/city/add/${node.id}`}
@@ -32,7 +32,7 @@ const TreeNode = ({ node }) => {
           </React.Fragment>
         );
       case 'city':
-        return <EditButtons />;
+        return <EditButtons nodeType={node.type} nodeId={node.id} />;
       default:
         return null;
     }

@@ -14,9 +14,9 @@ function parseBody(req, res, next) {
   next();
 }
 
+// ********** ROUTES **********
 const router = express.Router();
 
-// ********** ROUTES **********
 router.get('/', controller.getCities);
 
 router.get('/:id', [requireValidId], handleErrors, controller.getOneCity);

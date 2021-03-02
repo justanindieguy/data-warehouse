@@ -15,8 +15,8 @@ export default combineReducers({
   contactsQuery: contactsQueryReducer,
   modal: modalReducer,
   newUser: newUserReducer,
-  fetchedRegions: regionsReducer,
-  fetchedCountries: countriesReducer,
-  fetchedCities: citiesReducer,
+  regions: regionsReducer,
+  countries: countriesReducer,
+  cities: citiesReducer,
   places: placesReducer,
 });

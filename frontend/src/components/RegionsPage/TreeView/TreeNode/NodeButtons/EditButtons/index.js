@@ -1,10 +1,21 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const EditButtons = () => {
+const EditButtons = ({ nodeType, nodeId }) => {
   return (
     <div className="is-flex node-btn-container">
-      <button className="button is-link is-light is-small mr-2">Editar</button>
-      <button className="button is-danger is-light is-small">Eliminar</button>
+      <Link
+        className="button is-link is-light is-small mr-2"
+        to={`/regions/${nodeType}/edit/${nodeId}`}
+      >
+        Editar
+      </Link>
+      <Link
+        className="button is-danger is-light is-small"
+        to={`/regions/${nodeType}/delete/${nodeId}`}
+      >
+        Eliminar
+      </Link>
     </div>
   );
 };

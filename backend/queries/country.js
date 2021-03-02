@@ -6,6 +6,7 @@ const countryQuery = {
     'id',
     'name',
     [Sequelize.col('region.id'), 'region'],
+    [Sequelize.col('region.name'), 'regionName'],
     [Sequelize.fn('CONCAT', 'country'), 'type'],
   ],
   include: {

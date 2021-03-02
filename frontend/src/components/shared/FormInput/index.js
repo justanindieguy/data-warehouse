@@ -17,8 +17,8 @@ const FormField = (props) => {
     <div className="field" style={{ display: hidden ? 'none' : 'unset' }}>
       <label className="label">{label}</label>
       <div
-        className={`control ${iconLeft && 'has-icons-left'} ${
-          iconRight && 'has-icons-right'
+        className={`control ${iconLeft ? 'has-icons-left' : ''} ${
+          iconRight ? 'has-icons-right' : ''
         }`}
       >
         <input

@@ -1,18 +1,23 @@
 const Sequelize = require('sequelize');
 
 const { SERVER_ERROR_MSG } = require('../utils/constants');
+const sequelize = require('../database/database');
 const City = require('../models/City');
 const cityQuery = require('../queries/city');
 
 async function getCities(req, res) {
-  const { countryId } = req.query;
   let cities;
+  const sortBy = 'name';
+  const ascending = req.query.ascending || 'true';
+  const sortString = ascending === 'true' ? `${sortBy} ASC` : `${sortBy} DESC`;
+  const query = { ...cityQuery, order: sequelize.literal(sortString) };
+  const { countryId } = req.query;
 
   try {
     if (!countryId) {
-      cities = await City.findAll(cityQuery);
+      cities = await City.findAll(query);
     } else {
-      cities = await City.findAll({ ...cityQuery, where: { countryId } });
+      cities = await City.findAll({ ...query, where: { countryId } });
     }
 
     if (cities.length === 0) {
@@ -69,16 +74,19 @@ async function addCity(req, res) {
 }
 
 async function updateCity(req, res) {
+  let city;
   const { id } = req.params;
 
   try {
-    const city = await City.findOne({ where: { id } });
+    city = await City.findOne({ where: { id } });
 
     if (city) {
       await city.update(req.reqCity);
     } else {
       return res.status(404).json({ message: 'City not found.' });
     }
+
+    city = await City.findOne({ ...cityQuery, where: { id } });
 
     return res
       .status(200)

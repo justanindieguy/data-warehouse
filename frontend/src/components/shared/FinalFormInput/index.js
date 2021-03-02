@@ -2,7 +2,13 @@ import React from 'react';
 import { Field } from 'react-final-form';
 import { composeValidators } from '../../../validations';
 
-const FinalFormInput = ({ children, name, validators, value }) => {
+const FinalFormInput = ({
+  children,
+  name,
+  validators,
+  defaultValue,
+  initialValue,
+}) => {
   if (!validators) {
     validators = [];
   }
@@ -11,7 +17,8 @@ const FinalFormInput = ({ children, name, validators, value }) => {
     <Field
       name={name}
       validate={composeValidators(...validators)}
-      defaultValue={value}
+      defaultValue={defaultValue}
+      initialValue={initialValue}
     >
       {(props) => {
         const inputWithProps = React.Children.map(children, (child) => {

@@ -7,7 +7,11 @@ import UsersPage from './UsersPage';
 import RegionsPage from './RegionsPage';
 import AddRegion from './RegionsPage/AddRegion';
 import AddCountry from './RegionsPage/AddCountry';
+import EditCountry from './RegionsPage/EditCountry';
+import DeleteCountry from './RegionsPage/DeleteCountry';
 import AddCity from './RegionsPage/AddCity';
+import EditCity from './RegionsPage/EditCity';
+import DeleteCity from './RegionsPage/DeleteCity';
 
 const App = () => {
   return (
@@ -18,7 +22,15 @@ const App = () => {
       <Route path="/regions" component={RegionsPage} />
       <Route path="/regions/region/add" exact component={AddRegion} />
       <Route path="/regions/country/add/:id" exact component={AddCountry} />
+      <Route path="/regions/country/edit/:id" exact component={EditCountry} />
+      <Route
+        path="/regions/country/delete/:id"
+        exact
+        component={DeleteCountry}
+      />
       <Route path="/regions/city/add/:id" exact component={AddCity} />
+      <Route path="/regions/city/edit/:id" exact component={EditCity} />
+      <Route path="/regions/city/delete/:id" exact component={DeleteCity} />
     </Router>
   );
 };

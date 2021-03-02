@@ -5,21 +5,19 @@ import {
   FETCH_COUNTRIES,
   FETCH_CITIES,
   ALL_PLACES_FETCHED,
+  CLEAR_PLACES,
 } from './types';
 
 export const fetchAllPlaces = () => async (dispatch, getState) => {
   await dispatch(fetchRegions());
 
-  const uniqRegions = _.chain(getState().fetchedRegions)
-    .map('id')
-    .uniq()
-    .value();
+  const uniqRegions = _.chain(getState().regions).map('id').uniq().value();
 
   await Promise.all(
     uniqRegions.map((regionId) => dispatch(fetchCountries(regionId)))
   );
 
-  const countries = getState().fetchedCountries;
+  const countries = getState().countries;
 
   const uniqCountries = _.chain(countries).map('id').uniq().value();
 
@@ -30,9 +28,9 @@ export const fetchAllPlaces = () => async (dispatch, getState) => {
   dispatch({
     type: ALL_PLACES_FETCHED,
     payload: {
-      regions: getState().fetchedRegions,
-      countries: getState().fetchedCountries,
-      cities: getState().fetchedCities,
+      regions: _.cloneDeep(getState().regions),
+      countries: _.cloneDeep(getState().countries),
+      cities: _.cloneDeep(getState().cities),
     },
   });
 };
@@ -68,4 +66,8 @@ export const fetchCities = (countryId) => async (dispatch) => {
   }
 
   dispatch({ type: FETCH_CITIES, payload: cities });
+};
+
+export const clearPlaces = () => {
+  return { type: CLEAR_PLACES };
 };

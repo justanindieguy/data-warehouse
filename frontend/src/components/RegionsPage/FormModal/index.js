@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ModalForm from './ModalForm';
+import AddForm from './AddForm';
 import Actions from './Actions';
 import history from '../../../history';
 import RouterModal from '../../shared/RouterModal';
@@ -7,7 +7,7 @@ import RouterModal from '../../shared/RouterModal';
 class FormModal extends Component {
   renderContent() {
     return (
-      <ModalForm
+      <AddForm
         onFormSubmit={this.props.onFormSubmit}
         formId={this.props.formId}
         foreignKeyId={this.props.foreignKeyId}

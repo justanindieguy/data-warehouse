@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchAllPlaces } from '../../actions';
+import { fetchAllPlaces, clearPlaces } from '../../actions';
 import TreeView from './TreeView';
 import './styles.scss';
 
 class RegionsPage extends Component {
   componentDidMount() {
     this.props.fetchAllPlaces();
+  }
+
+  componentWillUnmount() {
+    this.props.clearPlaces();
   }
 
   render() {
@@ -41,4 +45,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   fetchAllPlaces,
+  clearPlaces,
 })(RegionsPage);
