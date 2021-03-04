@@ -5,28 +5,19 @@ import RouterModal from '../../shared/RouterModal';
 
 class DeleteModal extends Component {
   renderContent() {
-    return (
-      <div className="content">
-        <div className="icon-text is-flex is-align-items-center">
-          <span className="icon is-large has-text-danger">
-            <i className="fas fa-trash-alt" />
-          </span>
-          <span>{this.props.message}</span>
-        </div>
-      </div>
-    );
+    return <div className="content">{this.props.content}</div>;
   }
 
   renderActions() {
     return (
       <React.Fragment>
-        <button
-          className="button is-success"
-          onClick={this.props.onDeleteClick}
-        >
-          Aceptar
+        <button className="button is-danger" onClick={this.props.onDeleteClick}>
+          Eliminar
         </button>
-        <Link className="button is-danger" to={this.props.originRoute}>
+        <Link
+          className="button is-link is-outlined"
+          to={this.props.originRoute}
+        >
           Cancelar
         </Link>
       </React.Fragment>

@@ -1,0 +1,12 @@
+.dropdown {
+  &.is-centered {
+    display: block;
+    width: fit-content;
+    margin: auto;
+
+    > .dropdown-menu {
+      min-width: unset;
+      left: -100%;
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import AccountBox from './AccountBox';
 import ProgressBar from './ProgressBar';
+import ContactOptions from './ContactOptions';
 
 const TableRow = ({ contact }) => {
   return (
@@ -52,9 +53,7 @@ const TableRow = ({ contact }) => {
         <ProgressBar value={contact.interest} />
       </th>
       <th>
-        <div className="has-text-centered">
-          <i className="fas fa-ellipsis-h has-text-grey-light is-clickable" />
-        </div>
+        <ContactOptions contactId={contact.id} />
       </th>
     </tr>
   );

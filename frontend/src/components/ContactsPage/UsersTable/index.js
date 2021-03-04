@@ -1,27 +1,23 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import ColumnWidth from "./ColumnWidth";
-import TableColumn from "./TableColumn";
-import TableRow from "./TableRow";
-import { fetchContactsAndAccounts, changeSortBy } from "../../../actions";
-import "./styles.scss";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import ColumnWidth from './ColumnWidth';
+import TableColumn from './TableColumn';
+import TableRow from './TableRow';
+import { fetchContactsAndAccounts, changeSortBy } from '../../../actions';
+import './styles.scss';
 
 const labels = [
-  { content: "checkbox", type: "input" },
-  { content: "Contacto", type: "text", sortable: true, sortBy: "name" },
-  { content: "País/Región", type: "text", sortable: true, sortBy: "country" },
-  { content: "Companía", type: "text", sortable: true, sortBy: "company" },
-  { content: "Cargo", type: "text", sortable: true, sortBy: "position" },
-  { content: "Canal preferido", type: "text", sortable: false },
-  { content: "Interés", type: "text", sortable: true, sortBy: "interest" },
-  { content: "Acciones", type: "text", sortable: false },
+  { content: 'checkbox', type: 'input' },
+  { content: 'Contacto', type: 'text', sortable: true, sortBy: 'name' },
+  { content: 'País/Región', type: 'text', sortable: true, sortBy: 'country' },
+  { content: 'Companía', type: 'text', sortable: true, sortBy: 'company' },
+  { content: 'Cargo', type: 'text', sortable: true, sortBy: 'position' },
+  { content: 'Canal preferido', type: 'text', sortable: false },
+  { content: 'Interés', type: 'text', sortable: true, sortBy: 'interest' },
+  { content: 'Acciones', type: 'text', sortable: false },
 ];
 
 class UsersTable extends Component {
-  componentDidMount() {
-    this.props.fetchContactsAndAccounts();
-  }
-
   onClickColumn = (sortByValue) => {
     this.props.changeSortBy(sortByValue);
     this.props.fetchContactsAndAccounts();
@@ -67,7 +63,7 @@ class UsersTable extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { contacts: state.contacts, accounts: state.accounts };
+  return { accounts: state.accounts };
 };
 
 export default connect(mapStateToProps, {

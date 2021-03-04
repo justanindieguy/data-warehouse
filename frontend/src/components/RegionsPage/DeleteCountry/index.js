@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import DeleteModal from '../DeleteModal';
+import DeleteModal from '../../shared/DeleteModal';
 import api from '../../../apis/localApi';
 import { deleteCountry } from '../../../actions';
 
@@ -17,28 +17,37 @@ const DeleteCountry = ({ match, deleteCountry }) => {
     fetchCountry();
   }, [countryId]);
 
-  const renderMessage = () => {
+  const renderContent = () => {
     if (!selectedCountry) {
-      return null;
+      return <div>Loading...</div>;
     }
 
     return (
-      <React.Fragment>
-        <h4 className="m-0">
-          ¿Estás seguro que deseas eliminar el siguiente país?
-        </h4>
-        <span>
-          <b>{selectedCountry.name}</b> perteneciente a{' '}
-          <b>{selectedCountry.regionName}</b>
+      <div className="icon-text is-flex is-align-items-center">
+        <span className="icon is-large has-text-danger">
+          <i className="fas fa-trash-alt" />
         </span>
-      </React.Fragment>
+        <span>
+          <h4 className="m-0">
+            ¿Estás seguro que deseas eliminar el siguiente país?
+          </h4>
+          {selectedCountry ? (
+            <div>
+              <b>{selectedCountry.name}</b> perteneciente a{' '}
+              <b>{selectedCountry.regionName}</b>
+            </div>
+          ) : (
+            <div>Loading...</div>
+          )}
+        </span>
+      </div>
     );
   };
 
   return (
     <DeleteModal
       title="Eliminar País"
-      message={renderMessage()}
+      content={renderContent()}
       originRoute="/regions"
       onDeleteClick={() => deleteCountry(countryId)}
     />

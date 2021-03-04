@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import DeleteModal from '../DeleteModal';
+import DeleteModal from '../../shared/DeleteModal';
 import api from '../../../apis/localApi';
 import { deleteCity } from '../../../actions';
 
@@ -17,28 +17,33 @@ const DeleteCity = ({ match, deleteCity }) => {
     fetchCity();
   }, [cityId]);
 
-  const renderMessage = () => {
-    if (!selectedCity) {
-      return null;
-    }
-
+  const renderContent = () => {
     return (
-      <React.Fragment>
-        <h4 className="m-0">
-          ¿Estás seguro que deseas eliminar la siguiente ciudad?
-        </h4>
-        <span>
-          <b>{selectedCity.name}</b> perteneciente a{' '}
-          <b>{selectedCity.countryName}</b>
+      <div className="icon-text is-flex is-align-items-center">
+        <span className="icon is-large has-text-danger">
+          <i className="fas fa-trash-alt" />
         </span>
-      </React.Fragment>
+        <span>
+          <h4 className="m-0">
+            ¿Estás seguro que deseas eliminar la siguiente ciudad?
+          </h4>
+          {selectedCity ? (
+            <div>
+              <b>{selectedCity.name}</b> perteneciente a{' '}
+              <b>{selectedCity.countryName}</b>
+            </div>
+          ) : (
+            <div>Loading...</div>
+          )}
+        </span>
+      </div>
     );
   };
 
   return (
     <DeleteModal
       title="Eliminar Ciudad"
-      message={renderMessage()}
+      content={renderContent()}
       originRoute="/regions"
       onDeleteClick={() => deleteCity(cityId)}
     />
