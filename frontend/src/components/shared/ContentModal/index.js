@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom';
 import React, { useRef } from 'react';
 import useOutsideClickListener from '../../hooks/useOutsideClickListener';
 
-const AddModal = ({ content, onDismiss }) => {
+const ContentModal = ({ content, onDismiss }) => {
   const modalContent = useRef(null);
   useOutsideClickListener(modalContent, () => onDismiss());
 
@@ -16,4 +16,4 @@ const AddModal = ({ content, onDismiss }) => {
   );
 };
 
-export default AddModal;
+export default ContentModal;
