@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import DeleteModal from '../../shared/DeleteModal';
 import deleteContactIcon from '../../../assets/deleteContact.svg';
 import api from '../../../apis/localApi';
 import ContactField from './ContactField';
+import { deleteContact } from '../../../actions';
 
-const DeleteContact = ({ match }) => {
+const DeleteContact = ({ match, deleteContact }) => {
   const [selectedContact, setSelectedContact] = useState(null);
   const contactId = match.params.id;
 
@@ -58,9 +60,9 @@ const DeleteContact = ({ match }) => {
       title="Eliminar Contacto"
       content={renderContent()}
       originRoute="/contacts"
-      onDeleteClick={() => console.log('Deleting...')}
+      onDeleteClick={() => deleteContact(selectedContact.id)}
     />
   );
 };
 
-export default DeleteContact;
+export default connect(null, { deleteContact })(DeleteContact);

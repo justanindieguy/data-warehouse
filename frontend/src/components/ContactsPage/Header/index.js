@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -24,7 +25,9 @@ const Header = () => {
           <button className="button is-link is-outlined mr-2">
             Exportar contactos
           </button>
-          <button className="button is-link">Agregar contacto</button>
+          <Link className="button is-link" to="/contacts/add">
+            Agregar contacto
+          </Link>
         </div>
       </div>
     </div>

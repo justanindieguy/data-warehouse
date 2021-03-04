@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import { FETCH_CONTACTS, FETCH_ACCOUNTS, FETCH_NEW_QUERY } from './types';
+import history from '../history';
 import api from '../apis/localApi';
+import store from '../store';
 
 export const fetchContactsAndAccounts = () => async (dispatch, getState) => {
   dispatch({ type: FETCH_NEW_QUERY }); // Resets the account's state.
@@ -39,4 +41,11 @@ export const fetchAccounts = (userId) => async (dispatch) => {
   }
 
   dispatch({ type: FETCH_ACCOUNTS, payload: accounts });
+};
+
+export const deleteContact = (contactId) => async () => {
+  await api.delete(`/contacts/${contactId}`);
+
+  await store.dispatch(fetchContactsAndAccounts());
+  history.push('/contacts');
 };
