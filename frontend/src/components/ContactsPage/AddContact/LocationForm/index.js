@@ -6,6 +6,14 @@ import FormInput from '../../../shared/FormInput';
 import RangeInput from '../../../shared/RangeInput';
 import api from '../../../../apis/localApi';
 
+const values = [
+  { label: '0%', value: 0 },
+  { label: '25%', value: 25 },
+  { label: '50%', value: 50 },
+  { label: '75%', value: 75 },
+  { label: '100%', value: 100 },
+];
+
 const LocationForm = ({ form }) => {
   const [fetchedRegions, setFetchedRegions] = useState([]);
   const [fetchedCountries, setFetchedCountries] = useState([]);
@@ -144,8 +152,16 @@ const LocationForm = ({ form }) => {
         </FinalFormInput>
       </div>
       <div className="column is-one-fifth">
-        <FinalFormInput name="interest">
-          <RangeInput label="Interés:" min="0" max="100" step="25" />
+        <FinalFormInput name="interest" defaultValue={0} required>
+          <RangeInput
+            label="Interés:"
+            min="0"
+            max="100"
+            step="25"
+            form={form}
+            fieldName="interest"
+            values={values}
+          />
         </FinalFormInput>
       </div>
     </div>
