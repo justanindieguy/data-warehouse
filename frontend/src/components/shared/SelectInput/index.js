@@ -1,15 +1,18 @@
 import React from 'react';
-import { Field } from 'react-final-form';
 
-const SelectInput = ({ name, label, renderOptions, defaultValue }) => {
+const SelectInput = (props) => {
   return (
     <div className="field">
       <div className="control">
-        <label className="label">{label}</label>
-        <div className="select">
-          <Field name={name} component="select" defaultValue={defaultValue}>
-            {renderOptions()}
-          </Field>
+        <label className="label">{props.label}</label>
+        <div className={`select ${props.loading ? 'is-loading' : ''}`}>
+          <select
+            {...props.input}
+            disabled={props.disabled ? true : false}
+            required={props.required ? true : false}
+          >
+            {props.renderOptions()}
+          </select>
         </div>
       </div>
     </div>

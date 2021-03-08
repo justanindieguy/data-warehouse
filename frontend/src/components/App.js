@@ -3,6 +3,7 @@ import { Router, Route, Redirect } from 'react-router-dom';
 import history from '../history';
 import Navbar from './Navbar';
 import ContactsPage from './ContactsPage';
+import AddContact from './ContactsPage/AddContact';
 import DeleteContact from './ContactsPage/DeleteContact';
 import UsersPage from './UsersPage';
 import RegionsPage from './RegionsPage';
@@ -23,6 +24,7 @@ const App = () => {
         <Redirect to="/contacts" />
       </Route>
       <Route path="/contacts" component={ContactsPage} />
+      <Route path="/contacts/add" exact component={AddContact} />
       <Route path="/contacts/delete/:id" exact component={DeleteContact} />
       <Route path="/users" exact component={UsersPage} />
       <Route path="/regions" component={RegionsPage} />

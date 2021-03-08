@@ -1,12 +1,44 @@
 const Sequelize = require('sequelize');
+const { Op } = require('sequelize');
 
+const sequelize = require('../database/database');
 const { SERVER_ERROR_MSG } = require('../utils/constants');
 const Company = require('../models/Company');
 const companyQuery = require('../queries/company');
 
 async function getCompanies(req, res) {
+  let companies;
+  const sortBy = req.query.sortBy || 'name';
+  const ascending = req.query.ascending || 'true';
+  const sortString = ascending === 'true' ? `${sortBy} ASC` : `${sortBy} DESC`;
+  const offset = parseInt(req.query.offset, 10) || 0;
+  const { searchTerm } = req.query;
+  let limit = parseInt(req.query.limit, 10) || 10;
+
+  if (limit > 20) {
+    limit = 20;
+  }
+
+  const query = {
+    ...companyQuery,
+    order: sequelize.literal(sortString),
+    limit,
+    offset,
+  };
+
   try {
-    const companies = await Company.findAll(companyQuery);
+    if (!searchTerm) {
+      companies = await Company.findAll(query);
+    } else {
+      companies = await Company.findAll({
+        ...query,
+        where: {
+          name: {
+            [Op.like]: searchTerm,
+          },
+        },
+      });
+    }
 
     if (companies.length === 0) {
       return res.status(404).json({ message: 'There are no companies yet.' });

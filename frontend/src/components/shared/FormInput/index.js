@@ -1,7 +1,7 @@
 import React from 'react';
 
 const FormField = (props) => {
-  const { input, meta } = props;
+  const { input, meta, disabled } = props;
   const {
     label,
     iconLeft,
@@ -27,6 +27,7 @@ const FormField = (props) => {
           className="input"
           placeholder={placeholder}
           required={required}
+          disabled={disabled ? true : false}
         />
         {iconLeft && (
           <span className="icon is-small is-left">

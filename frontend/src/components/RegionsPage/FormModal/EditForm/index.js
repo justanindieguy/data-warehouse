@@ -30,12 +30,9 @@ const EditForm = (props) => {
             <FormInput required={true} label="Nombre:" />
           </FinalFormInput>
 
-          <SelectInput
-            name={selectName}
-            label={selectLabel}
-            renderOptions={renderOptions}
-            defaultValue={defaultSelectValue}
-          />
+          <FinalFormInput name={selectName} defaultValue={defaultSelectValue}>
+            <SelectInput label={selectLabel} renderOptions={renderOptions} />
+          </FinalFormInput>
 
           {foreignKeyId && foreignKeyName && (
             <FinalFormInput name={foreignKeyName} defaultValue={foreignKeyId}>
