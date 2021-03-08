@@ -10,6 +10,7 @@ const regionsRoute = require('./routes/regions');
 const countriesRoute = require('./routes/countries');
 const citiesRoute = require('./routes/cities');
 const accountsRoute = require('./routes/accounts');
+const channelsRoute = require('./routes/channels');
 
 const app = express();
 
@@ -25,5 +26,6 @@ app.use('/api/v1/regions', regionsRoute);
 app.use('/api/v1/countries', countriesRoute);
 app.use('/api/v1/cities', citiesRoute);
 app.use('/api/v1/accounts', accountsRoute);
+app.use('/api/v1/channels', channelsRoute);
 
 module.exports = app;

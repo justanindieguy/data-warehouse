@@ -75,10 +75,10 @@ const LocationForm = ({ form }) => {
       <div className="column is-one-fifth">
         <FinalFormInput name="region" defaultValue="DEFAULT">
           <SelectInput
+            required
             label="Región:"
             disabled={!fetchedRegions.length}
             loading={!fetchedRegions.length}
-            required={true}
             renderOptions={() =>
               renderOptions('Selecciona una región', fetchedRegions)
             }
@@ -94,10 +94,10 @@ const LocationForm = ({ form }) => {
       <div className="column is-one-fifth">
         <FinalFormInput name="country" defaultValue="DEFAULT">
           <SelectInput
+            required
             label="País:"
             disabled={!selectedRegion || !fetchedCountries.length}
             loading={selectedRegion && !fetchedCountries.length}
-            required={true}
             renderOptions={() =>
               renderOptions('Selecciona un país', fetchedCountries)
             }
@@ -116,10 +116,10 @@ const LocationForm = ({ form }) => {
       <div className="column is-one-fifth">
         <FinalFormInput name="city" defaultValue="DEFAULT">
           <SelectInput
+            required
             label="Ciudad:"
             disabled={!selectedCountry || !fetchedCountries.length}
             loading={selectedCountry && !fetchedCities.length}
-            required={true}
             renderOptions={() =>
               renderOptions('Selecciona una ciudad', fetchedCities)
             }
@@ -136,7 +136,7 @@ const LocationForm = ({ form }) => {
       <div className="column is-one-fifth">
         <FinalFormInput name="address">
           <FormInput
-            required={true}
+            required
             label="Dirección:"
             placeholder="Ingresa una dirección"
             disabled={!selectedRegion || !selectedCountry || !selectedCity}
