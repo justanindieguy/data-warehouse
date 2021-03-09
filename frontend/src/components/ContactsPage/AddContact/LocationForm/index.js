@@ -5,6 +5,7 @@ import SelectInput from '../../../shared/SelectInput';
 import FormInput from '../../../shared/FormInput';
 import RangeInput from '../../../shared/RangeInput';
 import api from '../../../../apis/localApi';
+import { required, noDefaults } from '../../../../validations';
 
 const values = [
   { label: '0%', value: 0 },
@@ -81,7 +82,11 @@ const LocationForm = ({ form }) => {
   return (
     <div className="contact-location columns">
       <div className="column is-one-fifth">
-        <FinalFormInput name="region" defaultValue="DEFAULT">
+        <FinalFormInput
+          name="regionId"
+          defaultValue="DEFAULT"
+          validators={[noDefaults]}
+        >
           <SelectInput
             required
             label="Región:"
@@ -92,15 +97,19 @@ const LocationForm = ({ form }) => {
             }
           />
         </FinalFormInput>
-        <OnChange name="region">
+        <OnChange name="regionId">
           {(value) => {
-            form.change('country', 'DEFAULT');
+            form.change('countryId', 'DEFAULT');
             setSelectedRegion(value);
           }}
         </OnChange>
       </div>
       <div className="column is-one-fifth">
-        <FinalFormInput name="country" defaultValue="DEFAULT">
+        <FinalFormInput
+          name="countryId"
+          defaultValue="DEFAULT"
+          validators={[noDefaults]}
+        >
           <SelectInput
             required
             label="País:"
@@ -111,9 +120,9 @@ const LocationForm = ({ form }) => {
             }
           />
         </FinalFormInput>
-        <OnChange name="country">
+        <OnChange name="countryId">
           {(value) => {
-            form.change('city', 'DEFAULT');
+            form.change('cityId', 'DEFAULT');
 
             value === 'DEFAULT'
               ? setSelectedCountry(null)
@@ -122,7 +131,11 @@ const LocationForm = ({ form }) => {
         </OnChange>
       </div>
       <div className="column is-one-fifth">
-        <FinalFormInput name="city" defaultValue="DEFAULT">
+        <FinalFormInput
+          name="cityId"
+          defaultValue="DEFAULT"
+          validators={[noDefaults]}
+        >
           <SelectInput
             required
             label="Ciudad:"
@@ -133,7 +146,7 @@ const LocationForm = ({ form }) => {
             }
           />
         </FinalFormInput>
-        <OnChange name="city">
+        <OnChange name="cityId">
           {(value) => {
             value === 'DEFAULT'
               ? setSelectedCity(null)
@@ -142,7 +155,7 @@ const LocationForm = ({ form }) => {
         </OnChange>
       </div>
       <div className="column is-one-fifth">
-        <FinalFormInput name="address">
+        <FinalFormInput name="address" validators={[required]}>
           <FormInput
             required
             label="Dirección:"

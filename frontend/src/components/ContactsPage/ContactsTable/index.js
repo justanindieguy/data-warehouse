@@ -17,7 +17,7 @@ const labels = [
   { content: 'Acciones', type: 'text', sortable: false },
 ];
 
-class UsersTable extends Component {
+class ContactsTable extends Component {
   onClickColumn = (sortByValue) => {
     this.props.changeSortBy(sortByValue);
     this.props.fetchContactsAndAccounts();
@@ -69,4 +69,4 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   fetchContactsAndAccounts,
   changeSortBy,
-})(UsersTable);
+})(ContactsTable);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Field } from 'react-final-form';
+import { composeValidators } from '../../../validations';
 import useOutsideClickListener from '../../hooks/useOutsideClickListener';
 import './styles.scss';
 
@@ -73,6 +74,9 @@ const AutocompleteInput = (props) => {
           <Field
             name={name}
             defaultValue={selectedItem && term ? selectedItem.id : ''}
+            validate={
+              props.validators && composeValidators(...props.validators)
+            }
           >
             {({ input }) => <input {...input} type="text" hidden required />}
           </Field>

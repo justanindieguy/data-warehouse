@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from './Header';
 import NoResults from '../shared/NoResults';
-import UsersTable from './UsersTable';
+import ContactsTable from './ContactsTable';
 import Footer from './Footer';
 import { fetchContactsAndAccounts } from '../../actions';
 
@@ -20,7 +20,7 @@ class ContactsPage extends Component {
           <NoResults icon="fa-frown" message="Intenta añadiendo un contacto" />
         ) : (
           <React.Fragment>
-            <UsersTable contacts={this.props.contacts} />
+            <ContactsTable contacts={this.props.contacts} />
             <Footer />
           </React.Fragment>
         )}

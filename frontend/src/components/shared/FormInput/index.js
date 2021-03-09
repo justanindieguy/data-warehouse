@@ -1,42 +1,33 @@
 import React from 'react';
 
 const FormField = (props) => {
-  const { input, meta, disabled } = props;
-  const {
-    label,
-    iconLeft,
-    iconRight,
-    type,
-    placeholder,
-    required,
-    hidden,
-  } = props;
+  const { input, meta } = props;
   const { error, submitError, dirtySinceLastSubmit, touched } = meta;
 
   return (
-    <div className="field" style={{ display: hidden ? 'none' : 'unset' }}>
-      <label className="label">{label}</label>
+    <div className="field">
+      <label className="label">{props.label}</label>
       <div
-        className={`control ${iconLeft ? 'has-icons-left' : ''} ${
-          iconRight ? 'has-icons-right' : ''
+        className={`control ${props.iconLeft ? 'has-icons-left' : ''} ${
+          props.iconRight ? 'has-icons-right' : ''
         }`}
       >
         <input
           {...input}
-          type={!type ? 'text' : type}
+          type={!props.type ? 'text' : props.type}
           className="input"
-          placeholder={placeholder}
-          required={required}
-          disabled={disabled ? true : false}
+          placeholder={props.placeholder}
+          required={props.required}
+          disabled={props.disabled ? true : false}
         />
-        {iconLeft && (
+        {props.iconLeft && (
           <span className="icon is-small is-left">
-            <i className={`fas ${iconLeft}`} />
+            <i className={`fas ${props.iconLeft}`} />
           </span>
         )}
-        {iconRight && (
+        {props.iconRight && (
           <span className="icon is-small is-right">
-            <i className={`fas ${iconRight}`} />
+            <i className={`fas ${props.iconRight}`} />
           </span>
         )}
       </div>

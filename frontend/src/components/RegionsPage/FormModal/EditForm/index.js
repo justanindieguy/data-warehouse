@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from 'react-final-form';
+import { Form, Field } from 'react-final-form';
 import { required } from '../../../../validations';
 import FinalFormInput from '../../../shared/FinalFormInput';
 import FormInput from '../../../shared/FormInput';
@@ -35,9 +35,9 @@ const EditForm = (props) => {
           </FinalFormInput>
 
           {foreignKeyId && foreignKeyName && (
-            <FinalFormInput name={foreignKeyName} defaultValue={foreignKeyId}>
-              <FormInput type="number" hidden={true} />
-            </FinalFormInput>
+            <Field name={foreignKeyName} defaultValue={foreignKeyId}>
+              {({ input }) => <input {...input} type="text" hidden required />}
+            </Field>
           )}
         </form>
       )}

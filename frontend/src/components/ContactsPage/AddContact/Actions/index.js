@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Actions = () => {
+const Actions = (props) => {
   return (
     <div className="actions">
       <div className="columns">
@@ -11,7 +11,14 @@ const Actions = () => {
           </Link>
         </div>
         <div className="column is-2 is-flex is-justify-content-flex-end">
-          <button className="button is-link" type="submit">
+          <button
+            className="button is-link"
+            type="submit"
+            disabled={
+              props.hasValidationErrors ||
+              (props.hasSubmitErrors && !props.dirtySinceLastSubmit)
+            }
+          >
             Guardar Contacto
           </button>
         </div>

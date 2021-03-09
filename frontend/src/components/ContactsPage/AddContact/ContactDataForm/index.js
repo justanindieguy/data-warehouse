@@ -3,6 +3,7 @@ import FinalFormInput from '../../../shared/FinalFormInput';
 import FormInput from '../../../shared/FormInput';
 import AutocompleteInput from '../../../shared/AutocompleteInput';
 import api from '../../../../apis/localApi';
+import { required, requireValidEmail } from '../../../../validations';
 
 const ContactDataForm = () => {
   const searchCompanies = useCallback(async (debouncedTerm) => {
@@ -53,22 +54,22 @@ const ContactDataForm = () => {
         </figure>
       </div>
       <div className="column">
-        <FinalFormInput name="name">
+        <FinalFormInput name="name" validators={[required]}>
           <FormInput required={true} label="Nombre:" />
         </FinalFormInput>
       </div>
       <div className="column">
-        <FinalFormInput name="lastName">
+        <FinalFormInput name="lastName" validators={[required]}>
           <FormInput required={true} label="Apellido:" />
         </FinalFormInput>
       </div>
       <div className="column">
-        <FinalFormInput name="position">
+        <FinalFormInput name="position" validators={[required]}>
           <FormInput required={true} label="Cargo: " />
         </FinalFormInput>
       </div>
       <div className="column">
-        <FinalFormInput name="email">
+        <FinalFormInput name="email" validators={[required, requireValidEmail]}>
           <FormInput required={true} label="Email: " />
         </FinalFormInput>
       </div>
@@ -80,6 +81,7 @@ const ContactDataForm = () => {
             placeholder="Ingresa nombre de compañía"
             onDebouncedTermChange={searchCompanies}
             renderResults={renderCompanies}
+            validators={[required]}
           />
         </div>
       </div>

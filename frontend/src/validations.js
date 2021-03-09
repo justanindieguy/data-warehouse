@@ -13,8 +13,8 @@ export const requireValidPassword = (value) =>
 export const passwordsMustMatch = (pass) => (value) =>
   pass === value ? undefined : 'Las contraseñas no coinciden.';
 
+export const noDefaults = (value) =>
+  value === 'DEFAULT' ? 'Selecciona una opción.' : undefined;
+
 export const composeValidators = (...validators) => (value) =>
-  validators.reduce(
-    (error, validator) => error || validator(value),
-    undefined
-  );
+  validators.reduce((error, validator) => error || validator(value), undefined);
