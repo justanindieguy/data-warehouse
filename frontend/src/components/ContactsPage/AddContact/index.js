@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Form } from 'react-final-form';
+import { connect } from 'react-redux';
 import ContentModal from '../../shared/ContentModal';
 import ContactDataForm from './ContactDataForm';
 import LocationForm from './LocationForm';
 import AccountsForm from './AccountsForm';
 import Actions from './Actions';
+import { addContact } from '../../../actions';
 import history from '../../../history';
 import api from '../../../apis/localApi';
 import './styles.scss';
 
-const AddContact = () => {
+const AddContact = ({ addContact }) => {
   const [accounts, setAccounts] = useState([{ accountNumber: 1 }]);
   const [fetchedChannels, setFetchedChannels] = useState([]);
 
@@ -32,7 +34,7 @@ const AddContact = () => {
             onClick={() => history.push('/contacts')}
           ></button>
         </div>
-        <Form onSubmit={(formValues) => console.log(formValues)}>
+        <Form onSubmit={(formValues) => addContact(formValues)}>
           {(props) => (
             <form onSubmit={props.handleSubmit}>
               <ContactDataForm />
@@ -66,4 +68,4 @@ const AddContact = () => {
   );
 };
 
-export default AddContact;
+export default connect(null, { addContact })(AddContact);

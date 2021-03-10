@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { FETCH_CONTACTS, FETCH_ACCOUNTS, FETCH_NEW_QUERY } from './types';
 import history from '../history';
 import api from '../apis/localApi';
-import store from '../store';
+import { addAccount } from './accounts';
 
 export const fetchContactsAndAccounts = () => async (dispatch, getState) => {
   dispatch({ type: FETCH_NEW_QUERY }); // Resets the account's state.
@@ -43,9 +43,33 @@ export const fetchAccounts = (userId) => async (dispatch) => {
   dispatch({ type: FETCH_ACCOUNTS, payload: accounts });
 };
 
-export const deleteContact = (contactId) => async () => {
+export const addContact = (formValues) => async (dispatch) => {
+  const isAccount = (value, key) => {
+    return _.startsWith(key, 'account');
+  };
+
+  const accounts = Object.values(_.pickBy(formValues, isAccount));
+  const validAccounts = accounts.filter(
+    (account) => account.channelId !== 'DEFAULT'
+  );
+  const parsedValues = _.omitBy(formValues, isAccount);
+
+  const createdContact = await api.post('/contacts', parsedValues);
+  const { id: newContactId } = createdContact.data.data;
+
+  await Promise.all(
+    validAccounts.map((account) =>
+      addAccount({ ...account, contactId: newContactId })
+    )
+  );
+
+  await dispatch(fetchContactsAndAccounts());
+  history.push('/contacts');
+};
+
+export const deleteContact = (contactId) => async (dispatch) => {
   await api.delete(`/contacts/${contactId}`);
 
-  await store.dispatch(fetchContactsAndAccounts());
+  await dispatch(fetchContactsAndAccounts());
   history.push('/contacts');
 };
